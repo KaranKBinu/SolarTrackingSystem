@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    input[type='text'],
+    input[type='password'],
+    input[type='tel'],
+    input[type='email'] {
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 3px 2px 5px black inset;
+    }
+
+    .txtarea {
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 3px 2px 5px black inset;
+    }
+
+    input[type='text']:focus,
+    input[type='password']:focus,
+    input[type='tel']:focus,
+    input[type='email']:focus,
+    .txtarea:focus {
+        box-shadow: 3px 2px 5px black inset;
+        outline: 2px solid #0c9FFF;
+    }
+</style>
+
+<div class="container-fluid py-5" id="signup" style="margin-top:5%;">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center ">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Sign Up</h6>
+            <h1 class="font-secondary display-4">Sign Up and Be In our Family</h1>
+        </div>
+
+        <div class="row justify-content-center ">
+            <div class="col-lg-8">
+                <div class="contact-form">
+                    {% block error_messages %}
+                    {{ block.super }}
+                    {% endblock %}
+
+                    <div id="success"></div>
+                    <form name="sentMessage" id="signup-Form" method="POST" action="{% url 'signup' %}"
+                        novalidate="novalidate">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-sm-6 control-group">
+                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="fn"
+                                    placeholder="Your Name" required="required" name="first_name"
+                                    data-validation-required-message="Please enter your First Name" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-sm-6 control-group">
+                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="sn"
+                                    placeholder="Last Name" required="required" name="last_name"
+                                    data-validation-required-message="Please enter your Last Name" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-6 control-group">
+                                <input type="email" class="form-control bg-secondary border-0 py-4 px-3" id="email"
+                                    placeholder="Your Email" required="required" name="user_email"
+                                    data-validation-required-message="Please enter your Email" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-sm-6 control-group">
+                                <input type="tel" class="form-control bg-secondary border-0 py-4 px-3" id="phn_no"
+                                    placeholder="Your Phone" required="required" name="phone_no"
+                                    data-validation-required-message="Please enter your Phone Number" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-sm-6 control-group">
+                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="pass"
+                                    placeholder="Your Password" required="required" name="password"
+                                    data-validation-required-message="Please enter your Password" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="col-sm-6 control-group">
+                                <input type="password" class="form-control bg-secondary border-0 py-4 px-3"
+                                    id="confirm_pass" placeholder="Confirm Your Password" required="required"
+                                    name="confirm_password"
+                                    data-validation-required-message="Please confirm your password" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <textarea class="form-control bg-secondary txtarea border-0 py-2 px-3" rows="6" id="address"
+                                placeholder="Your Full Address" required="required" name="user_address"
+                                data-validation-required-message="Please enter your Full Address"></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary font-weight-bold py-3 px-5 w-100 rounded-pill" type="submit"
+                                id="signUpButton">Sign Up</button>
+                            <p class="help-block text-primary mt-2">Do Not Have an Account<a href="{% url 'login' %}"
+                                    class="text-danger help-block">Sign In</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+{% endblock %}

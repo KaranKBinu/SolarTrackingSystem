@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content  %}    
+<style>
+
+input[type='text'],input[type='password'],input[type='tel'],input[type='email']{
+    border-radius:50px;
+    text-align:center;
+    box-shadow:3px 2px 5px black inset;
+}
+
+ .txtarea{
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    text-align:center;
+    box-shadow:3px 2px 5px black inset;
+ }
+
+ input[type='text']:focus,input[type='password']:focus,input[type='tel']:focus,input[type='email']:focus, .txtarea:focus{
+    box-shadow:3px 2px 5px black inset;
+    outline:2px solid #0c9FFF;
+ }
+ button{
+    box-shadow:3px 2px 5px blue;
+ }
+</style>
+</style>    
+
+<div class="container-fluid py-5" id="signup" style="margin-top:5%;">
+    <div class="container py-5 signup-container">
+        <div class="section-title position-relative text-center ">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Sign In</h6>
+            <h1 class="font-secondary display-4">Welcome Back</h1>
+        </div>
+        <div class="row justify-content-center ">
+            <div class="col-lg-8">
+                <div class="contact-form">
+                    <div id="success"></div>
+                    <form name="login" id="signup-Form">
+                            <div class="control-group">
+                                <input type="email" class="form-control bg-secondary border-0 py-4 px-3 text-center" id="email"
+                                    placeholder="Your Email" required="required"
+                                    data-validation-required-message="Please enter your Email" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+
+                            <div class="control-group ">
+                                <input type="text" class="form-control text-center bg-secondary border-0 py-4 px-3 mt-4" id="pass"
+                                    placeholder="Your Password" required="required"
+                                    data-validation-required-message="Please enter your Password" />
+                                <p class="help-block text-danger"></p>
+                                <a class="help-block text-primary ml-2" href="#">Forgot Password ?</a>
+                            </div>
+                            <div class="text-center">
+                            <button class="btn btn-primary font-weight-bold py-3 px-5 w-100 rounded-pill mt-2" type="submit"
+                                id="signUpButton">Sign In</button>
+                            <p class="help-block text-primary mt-2">Do Not Have an Account? <a href="{% url 'signup' %}" class="text-danger help-block">Sign Up</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+{% endblock %}
