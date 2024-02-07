@@ -29,11 +29,13 @@
     <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="51">
     <!-- Navbar Start -->
-   <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-1 py-lg-0 px-lg-5" style='display:flex;'>
+    <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-1 py-lg-0 px-lg-5"
+        style='display:flex;'>
 
         <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
             <h1 class="display-12 text-white text-uppercase m-0" style="font-size: medium;">Solar Tracking system</h1>
@@ -45,34 +47,44 @@
             <div class="navbar-nav ml-auto py-0">
                 <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
                 <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
-            
-                {% if request.session.user_id %}
-                    <!-- Show logout link for logged-in users -->
-                    <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
-                {% else %}
-                    <!-- Show sign up link for not logged-in users -->
-                    <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
+
+                {% if not request.session.user_id %}
+
+
+                <!-- Show sign up link for not logged-in users -->
+                <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
                 {% endif %}
             </div>
 
-            
+
             <a href="{% url 'index' %}" class="navbar-brand bg-primary px-4 mx-3 d-none d-lg-block">
                 <h1 class="display-4 text-white text-uppercase m-0">Solar Tracking System</h1>
             </a>
             <div class="navbar-nav mr-auto py-0">
-                {% if request.session.user_id %}
-                    <!-- Show logout link for logged-in users -->
-                    <a href="{% url 'profile' %}" class="nav-item nav-link">{{ request.session.user_name|first|capfirst }}</a>
 
-                {% else %}
-                  <!-- Show sign in link for not logged-in users -->
-                  <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
-                {% endif %}
-           
+
                 <a href="#" class="nav-item nav-link">Service</a>
                 <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                {% if request.session.user_id %}
+                <div class="dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                    <a href="#" class="nav-item nav-link profile-container">
+                        <div class="profile-icon" id="profile-icon">
+                            {{ request.session.user_name|first|capfirst }}
+                        </div>
+                    </a>
+                    <div class="dropdown-content" id="dropdown-content">
+                        <a href="{% url 'profile' %}">Profile</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+
+
+                {% else %}
+                <!-- Show sign in link for not logged-in users -->
+                <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
+                {% endif %}
             </div>
-            
+
         </div>
     </nav>
 
@@ -195,8 +207,6 @@
                 href="https://htmlcodex.com">HTML Codex</a></p>
     </div>
     <!-- Footer End -->
-
-
 
     <!-- Scroll to Bottom -->
     <i class="fa fa-2x fa-angle-down text-white scroll-to-bottom"></i>

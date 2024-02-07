@@ -112,3 +112,43 @@
 
 })(jQuery);
 
+document.addEventListener("DOMContentLoaded", function () {
+    changeProfileColors();
+});
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function getContrastColor(hexColor) {
+    // Function to determine if the text should be light or dark based on background color
+    var r = parseInt(hexColor.slice(1, 3), 16);
+    var g = parseInt(hexColor.slice(3, 5), 16);
+    var b = parseInt(hexColor.slice(5, 7), 16);
+    var brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 128 ? '#000' : '#fff';
+}
+
+function changeProfileColors() {
+    var profileIcon = document.getElementById('profile-icon');
+
+    var randomBackgroundColor = getRandomColor();
+    var randomTextColor = getContrastColor(randomBackgroundColor);
+
+    profileIcon.style.backgroundColor = randomBackgroundColor;
+    profileIcon.style.color = randomTextColor;
+}
+function showDropdown() {
+    var dropdownContent = document.getElementById('dropdown-content');
+    dropdownContent.style.display = 'block';
+}
+
+function hideDropdown() {
+    var dropdownContent = document.getElementById('dropdown-content');
+    dropdownContent.style.display = 'none';
+}
