@@ -33,8 +33,8 @@
 
 <body data-spy="scroll" data-target=".navbar" data-offset="51">
     <!-- Navbar Start -->
-    <nav class="nav-bar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-1 py-lg-0 px-lg-5"
-        style='display:flex;'>
+   <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-1 py-lg-0 px-lg-5" style='display:flex;'>
+
         <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
             <h1 class="display-12 text-white text-uppercase m-0" style="font-size: medium;">Solar Tracking system</h1>
         </a>
@@ -45,17 +45,33 @@
             <div class="navbar-nav ml-auto py-0">
                 <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
                 <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
-
-                <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
+            
+                {% if request.session.user_id %}
+                    <!-- Show logout link for logged-in users -->
+                    <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                {% else %}
+                    <!-- Show sign up link for not logged-in users -->
+                    <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
+                {% endif %}
             </div>
+
+            
             <a href="{% url 'index' %}" class="navbar-brand bg-primary px-4 mx-3 d-none d-lg-block">
-                <h1 class="display-4 text-white text-uppercase m-0">Solar Tracking system</h1>
+                <h1 class="display-4 text-white text-uppercase m-0">Solar Tracking System</h1>
             </a>
             <div class="navbar-nav mr-auto py-0">
-                <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
-                <a href="#service" class="nav-item nav-link">Service</a>
+                {% if request.session.user_id %}
+                    <!-- Show logout link for logged-in users -->
+                <a href="{% url 'profile' %}" class="nav-item nav-link">PROFILE</a>
+                {% else %}
+                  <!-- Show sign in link for not logged-in users -->
+                  <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
+                {% endif %}
+           
+                <a href="#" class="nav-item nav-link">Service</a>
                 <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
             </div>
+            
         </div>
     </nav>
 

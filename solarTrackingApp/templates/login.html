@@ -37,18 +37,22 @@ input[type='text'],input[type='password'],input[type='tel'],input[type='email']{
         <div class="row justify-content-center ">
             <div class="col-lg-8">
                 <div class="contact-form">
+                    {% block error_messages %}
+                    {{ block.super }}
+                    {% endblock %}
                     <div id="success"></div>
-                    <form name="login" id="signup-Form">
-                            <div class="control-group">
+                    <form name="login" id="login-Form"  method="POST" action="{% url 'login' %}" >
+                        {% csrf_token %}   
+                        <div class="control-group">
                                 <input type="email" class="form-control bg-secondary border-0 py-4 px-3 text-center" id="email"
-                                    placeholder="Your Email" required="required"
+                                    placeholder="Your Email" required="required" name="username"
                                     data-validation-required-message="Please enter your Email" />
                                 <p class="help-block text-danger"></p>
                             </div>
 
                             <div class="control-group ">
                                 <input type="text" class="form-control text-center bg-secondary border-0 py-4 px-3 mt-4" id="pass"
-                                    placeholder="Your Password" required="required"
+                                    placeholder="Your Password" required="required" name="password"
                                     data-validation-required-message="Please enter your Password" />
                                 <p class="help-block text-danger"></p>
                                 <a class="help-block text-primary ml-2" href="#">Forgot Password ?</a>

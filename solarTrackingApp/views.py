@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .models import UserProfile
 from django.contrib.auth.hashers import make_password, check_password
@@ -17,6 +16,9 @@ def about(request):
 def contact(request):
     return render(request, "contact.html")
 
+
+def profile(request):
+    return render(request, "profile.html")
 
 def signup(request):
     if request.method == "POST":
@@ -45,6 +47,7 @@ def signup(request):
         user_profile = UserProfile.objects.create(
             first_name=first_name,
             last_name=last_name,
+            username=email,
             email=email,
             phone_number=phone_number,
             password=hashed_password,
@@ -65,4 +68,34 @@ def signup(request):
 
 
 def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        
+        try:
+            # Query the user by username
+            user = UserProfile.objects.get(username=username)
+            print(user)
+            # Check if the provided password matches the stored password
+            if check_password(password, user.password):
+                # Store user information in session (optional)
+                request.session['user_id'] = user.id
+                request.session['user_email'] = user.email
+                request.session['user_name'] = f"{user.first_name} {user.last_name}"
+                messages.success(request, "Login success, Welcome Back..!")
+                return redirect("index")
+            else:
+                messages.error(request, "Make sure you have entered correct password!!")
+                return redirect("login")
+        
+        except UserProfile.DoesNotExist:
+            messages.error(request, "User does not exist. Please try again.")
+            return redirect("login")
+
     return render(request, "login.html")
+
+def user_logout(request):
+    # Clear session data
+    request.session.clear()
+    messages.success(request, "Logged out successfully.")
+    return redirect("index") 
