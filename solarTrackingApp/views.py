@@ -18,7 +18,12 @@ def contact(request):
 
 
 def profile(request):
-    return render(request, "profile.html")
+    if request.session["user_id"]:
+        user=UserProfile.objects.get(email=request.session['user_email'])
+        return render(request,'profile.html',{"user":user})
+    else:
+        messages.success(request,"Please Login to Access this Page!")
+        return redirect("login")
 
 def signup(request):
     if request.method == "POST":

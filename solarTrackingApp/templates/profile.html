@@ -5,8 +5,45 @@
 <div class="container-fluid py-5" id="signup" style="margin-top:5%;">
     <div class="container py-5">
         <div class="section-title position-relative text-center ">
-            <h5 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Profile</h5>
-            <h1 class="font-secondary display-4">Hello </h1>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h5 class="text-uppercase text-primary mb-3">Profile</h5>
+                                <h1 class="font-secondary display-4">Hello, {{ user.first_name }}</h1>
+                            </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">First Name</th>
+                                                <td>{{ user.first_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Last Name</th>
+                                                <td>{{ user.last_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Email</th>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Phone</th>
+                                                <td>{{ user.phone_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Address</th>
+                                                <td>{{ user.address }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

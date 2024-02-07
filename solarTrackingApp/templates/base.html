@@ -62,7 +62,8 @@
             <div class="navbar-nav mr-auto py-0">
                 {% if request.session.user_id %}
                     <!-- Show logout link for logged-in users -->
-                <a href="{% url 'profile' %}" class="nav-item nav-link">PROFILE</a>
+                    <a href="{% url 'profile' %}" class="nav-item nav-link">{{ request.session.user_name|first|capfirst }}</a>
+
                 {% else %}
                   <!-- Show sign in link for not logged-in users -->
                   <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
