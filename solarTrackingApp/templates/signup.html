@@ -80,20 +80,37 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="col-sm-6 control-group">
-                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="pass"
+                            <div class="col-sm-6 control-group input-group mb-4">
+                                <input type="password" class="form-control bg-secondary border-0 py-4 px-3" id="pass"
                                     placeholder="Your Password" required="required" name="password"
                                     data-validation-required-message="Please enter your Password" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text toggle-password bg-transparent"
+                                        onclick="togglePasswordVisibility('#pass')"
+                                        style="border-radius: 0 50px 50px 0; cursor: pointer;">
+                                        <i class="far fa-eye icon-far-eye"></i>
+                                    </span>
+                                </div>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div class="col-sm-6 control-group">
+                            <div class="col-sm-6 control-group input-group mb-4">
                                 <input type="password" class="form-control bg-secondary border-0 py-4 px-3"
                                     id="confirm_pass" placeholder="Confirm Your Password" required="required"
                                     name="confirm_password"
                                     data-validation-required-message="Please confirm your password" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text toggle-password bg-transparent"
+                                        onclick="togglePasswordVisibility('#confirm_pass')"
+                                        style="border-radius: 0 50px 50px 0; cursor: pointer;">
+                                        <i class="far fa-eye icon-far-eye"></i>
+                                    </span>
+                                </div>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
+
+
+
                         <div class="control-group">
                             <textarea class="form-control bg-secondary txtarea border-0 py-2 px-3" rows="6" id="address"
                                 placeholder="Your Full Address" required="required" name="user_address"
@@ -112,6 +129,37 @@
         </div>
     </div>
 </div>
-<!-- Contact End -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePasswords = document.querySelectorAll('.toggle-password');
+
+        togglePasswords.forEach(function (togglePassword) {
+            const passwordInputId = togglePassword.getAttribute('onclick').match(/'#(.+?)'/)[1];
+            const passwordInput = document.getElementById(passwordInputId);
+
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle eye icon
+                const eyeIcon = togglePassword.querySelector('.icon-far-eye');
+                if (type === 'password') {
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                } else {
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
 
 {% endblock %}

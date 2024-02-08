@@ -37,6 +37,22 @@
     <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-dark navbar-dark py-1 py-lg-0 px-lg-5"
         style='display:flex;'>
 
+
+        {% if request.session.user_id %}
+        <div class="dropdown centered-dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+            <a href="#" class="nav-item nav-link profile-container">
+                <div class="profile-icon" id="profile-icon">
+                    {{ request.session.user_name|first|capfirst }}
+                </div>
+            </a>
+            <div class="dropdown-content" id="dropdown-content">
+                <a href="{% url 'profile' %}" class="text-center">{{ request.session.user_name}}</a>
+                <a href="{% url 'profile' %}" class="text-center">{{ request.session.user_email}}</a>
+                <a href="{% url 'profile' %}" class="text-center">Profile</a>
+                <a href="{% url 'logout' %}" class="text-center">Logout</a>
+            </div>
+        </div>
+        {% endif %}
         <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
             <h1 class="display-12 text-white text-uppercase m-0" style="font-size: medium;">Solar Tracking system</h1>
         </a>
@@ -44,45 +60,33 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-            <div class="navbar-nav ml-auto py-0">
+            <div class="navbar-nav ml-auto py-0 text-center">
                 <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
-                <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
-
                 {% if not request.session.user_id %}
 
-
-                <!-- Show sign up link for not logged-in users -->
+                <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
                 <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
+                {% else %}
+                <!-- Show sign in link for not logged-in users -->
+                <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
                 {% endif %}
+
             </div>
 
 
             <a href="{% url 'index' %}" class="navbar-brand bg-primary px-4 mx-3 d-none d-lg-block">
                 <h1 class="display-4 text-white text-uppercase m-0">Solar Tracking System</h1>
             </a>
-            <div class="navbar-nav mr-auto py-0">
-
-
-                <a href="#" class="nav-item nav-link">Service</a>
+            <div class="navbar-nav mr-auto py-0 text-center">
+                <a href="#" class="nav-item nav-link">Services</a>
                 <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
-                {% if request.session.user_id %}
-                <div class="dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-                    <a href="#" class="nav-item nav-link profile-container">
-                        <div class="profile-icon" id="profile-icon">
-                            {{ request.session.user_name|first|capfirst }}
-                        </div>
-                    </a>
-                    <div class="dropdown-content" id="dropdown-content">
-                        <a href="{% url 'profile' %}">Profile</a>
-                        <a href="{% url 'logout' %}">Logout</a>
-                    </div>
-                </div>
+                {% if not request.session.user_id %}
+                <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
 
-
-                {% else %}
-                <!-- Show sign in link for not logged-in users -->
-                <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
                 {% endif %}
+
+
+
             </div>
 
         </div>

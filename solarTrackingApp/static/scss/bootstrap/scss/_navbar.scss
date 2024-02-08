@@ -38,7 +38,7 @@
   }
 
   @each $breakpoint, $container-max-width in $container-max-widths {
-    > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
+    >.container#{breakpoint-infix($breakpoint, $container-max-widths)} {
       @extend %container-flex-properties;
     }
   }
@@ -154,13 +154,13 @@
           padding-left: 0;
         }
 
-        > .container,
-        > .container-fluid {
+        >.container,
+        >.container-fluid {
           @extend %container-navbar-expand-#{$breakpoint};
         }
 
         @each $size, $container-max-width in $container-max-widths {
-          > .container#{breakpoint-infix($size, $container-max-widths)} {
+          >.container#{breakpoint-infix($size, $container-max-widths)} {
             @extend %container-navbar-expand-#{$breakpoint};
           }
         }
@@ -188,13 +188,13 @@
           flex-wrap: nowrap;
         }
 
-        > .container,
-        > .container-fluid {
+        >.container,
+        >.container-fluid {
           @extend %container-nesting-#{$breakpoint};
         }
 
         @each $size, $container-max-width in $container-max-widths {
-          > .container#{breakpoint-infix($size, $container-max-widths)} {
+          >.container#{breakpoint-infix($size, $container-max-widths)} {
             @extend %container-nesting-#{$breakpoint};
           }
         }
@@ -242,8 +242,8 @@
       }
     }
 
-    .show > .nav-link,
-    .active > .nav-link,
+    .show>.nav-link,
+    .active>.nav-link,
     .nav-link.show,
     .nav-link.active {
       color: $navbar-light-active-color;
@@ -261,6 +261,7 @@
 
   .navbar-text {
     color: $navbar-light-color;
+
     a {
       color: $navbar-light-active-color;
 
@@ -294,8 +295,8 @@
       }
     }
 
-    .show > .nav-link,
-    .active > .nav-link,
+    .show>.nav-link,
+    .active>.nav-link,
     .nav-link.show,
     .nav-link.active {
       color: $navbar-dark-active-color;
@@ -313,6 +314,7 @@
 
   .navbar-text {
     color: $navbar-dark-color;
+
     a {
       color: $navbar-dark-active-color;
 
