@@ -10,7 +10,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+    <link href="{% static 'img/solar-favicon.webp' %}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -29,7 +29,6 @@
     <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="51">
@@ -39,19 +38,29 @@
 
 
         {% if request.session.user_id %}
-        <div class="dropdown centered-dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-            <a href="#" class="nav-item nav-link profile-container">
-                <div class="profile-icon" id="profile-icon">
-                    {{ request.session.user_name|first|capfirst }}
+        <div class="dropdown" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+            <a href="#" class="nav-link" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <div class="profile-icon px-3 py-2 rounded-pill" id="profile-icon">
+                    <span class="bold" style="font-weight: bold;">{{ request.session.user_name|first|capfirst }}</span>
                 </div>
             </a>
-            <div class="dropdown-content" id="dropdown-content">
-                <a href="{% url 'profile' %}" class="text-center">{{ request.session.user_name}}</a>
-                <a href="{% url 'profile' %}" class="text-center">{{ request.session.user_email}}</a>
-                <a href="{% url 'profile' %}" class="text-center">Profile</a>
-                <a href="{% url 'logout' %}" class="text-center">Logout</a>
+            <div class="dropdown-menu rounded" aria-labelledby="profileDropdown" id="dropdown-content">
+                <a href="{% url 'profile' %}" class="dropdown-item text-center"
+                    style="font-weight: bold;text-transform: capitalize;">Hello <span
+                        style="color: blue;font-weight: bold;text-transform: capitalize;">
+                        {{ request.session.user_name}}
+                    </span></a>
+                <a href="{% url 'profile' %}" class="dropdown-item text-center">{{ request.session.user_email}}</a>
+                <div class=" dropdown-divider">
+                </div>
+                <a href="{% url 'profile' %}" class="dropdown-item text-center rounded-pill py-2 mb-2"
+                    style="color: white;background-color: #224276;font-weight: bold;">Profile</a>
+                <a href="{% url 'logout' %}" class="dropdown-item text-center rounded-pill py-2 mt-2"
+                    style="color: white;background-color: red;font-weight: bold;">Logout</a>
             </div>
         </div>
+
         {% endif %}
         <a href="{% url 'index' %}" class="navbar-brand d-block d-lg-none">
             <h1 class="display-12 text-white text-uppercase m-0" style="font-size: medium;">Solar Tracking system</h1>
@@ -78,7 +87,7 @@
                 <h1 class="display-4 text-white text-uppercase m-0">Solar Tracking System</h1>
             </a>
             <div class="navbar-nav mr-auto py-0 text-center">
-                <a href="#" class="nav-item nav-link">Services</a>
+                <a href="#" class="nav-item nav-link">Dashboard</a>
                 <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                 {% if not request.session.user_id %}
                 <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
@@ -94,9 +103,10 @@
 
     <!-- Navbar End -->
     {% block content %}
+
     {% block error_messages %}
     {% if messages %}
-    <div class="msg-container text-center">
+    <div class="msg-container text-center" style="position: relative; z-index: 9999999;">
         <div class="container mt-3">
             {% for message in messages %}
             <div class="alert alert-dismissible fade show {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}"
@@ -127,6 +137,7 @@
     </div>
     {% endif %}
     {% endblock %}
+
     {% endblock %}
 
 
