@@ -26,13 +26,13 @@
                             System</h4>
                         <h3 class="display-2 font-secondary text-white mb-4">Innovative Solar Solution For Home</h3>
                         {% if request.session.user_email %}
-                        <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'profile' %}">Hello {{request.session.user_name}}</a>
+                        <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll" href="{% url 'profile' %}"
+                            style="text-transform: capitalize;">Hello {{request.session.user_name}}</a>
                         {% else %}
                         <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'login' %}">Sign In</a>
+                            href="{% url 'login' %}">Login</a>
                         <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'signup' %}">Sign Up</a>
+                            href="{% url 'signup' %}">Register</a>
                         {% endif %}
                     </div>
                 </div>
@@ -47,13 +47,13 @@
                             System</h4>
                         <h3 class="display-2 font-secondary text-white mb-4">Make Your Home More Digitalized</h3>
                         {% if request.session.user_email %}
-                        <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'profile' %}">Hello {{request.session.user_name}}</a>
+                        <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll" href="{% url 'profile' %}"
+                            style="text-transform: capitalize;">Hello {{request.session.user_name}}</a>
                         {% else %}
                         <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'login' %}">Sign In</a>
+                            href="{% url 'login' %}">Login</a>
                         <a class="btn btn-light font-weight-bold py-3 px-5 mt-2 btn-scroll"
-                            href="{% url 'signup' %}">Sign Up</a>
+                            href="{% url 'signup' %}">Register</a>
                         {% endif %}
                     </div>
                 </div>

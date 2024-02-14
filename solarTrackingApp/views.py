@@ -122,21 +122,23 @@ def user_logout(request):
     return redirect("index")
 
 
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+
 @csrf_exempt
-def receive_data(request):
-    if request.method == "POST":
-        voltage = request.POST.get("voltage")
-        ldr1 = request.POST.get("ldr1")
-        ldr2 = request.POST.get("ldr2")
-        servo_angle = request.POST.get("servo_angle")
+def update_data(request):
+    if request.method == 'POST':
+        voltage = request.POST.get('voltage', '')
+        ldr1 = request.POST.get('ldr1', '')
+        ldr2 = request.POST.get('ldr2', '')
+        servo_angle = request.POST.get('servoAngle', '')
 
-        # Process the received data as needed
-        # For now, just print the data
-        print(
-            f"Received data - Voltage: {voltage}, LDR 1: {ldr1}, LDR 2: {ldr2}, Servo Angle: {servo_angle}"
-        )
+        # You can process the data as needed (e.g., save to database)
+        # For now, just print it
+        print(f"Voltage: {voltage}, LDR 1: {ldr1}, LDR 2: {ldr2}, Servo Angle: {servo_angle}")
 
-        response_data = f"Received data - Voltage: {voltage}, LDR 1: {ldr1}, LDR 2: {ldr2}, Servo Angle: {servo_angle}"
-        return HttpResponse(response_data, status=200)
-    else:
-        return HttpResponse("Invalid request method", status=400)
+        # You may want to return a response to the ESP32
+        return HttpResponse("Data received successfully.")
+
+    return HttpResponse("Invalid request method.")

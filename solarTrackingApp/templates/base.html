@@ -73,8 +73,8 @@
                 <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
                 {% if not request.session.user_id %}
 
-                <a href="{% url 'login' %}" class="nav-item nav-link">Sign In</a>
-                <a href="{% url 'signup' %}" class="nav-item nav-link">Sign Up</a>
+                <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                <a href="{% url 'signup' %}" class="nav-item nav-link">Register</a>
                 {% else %}
                 <!-- Show sign in link for not logged-in users -->
                 <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
