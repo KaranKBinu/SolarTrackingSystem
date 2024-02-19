@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import UserProfile
+from .models import Contact, UserProfile, SensorData
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.utils.datastructures import MultiValueDictKeyError
 
 
 # Create your views here.
@@ -16,16 +17,65 @@ def about(request):
 
 
 def contact(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+        Contact.objects.create(name=name, email=email, subject=subject, message=message)
+        messages.success(request, "Thank you for contacting us..")
+        return redirect("index")
     return render(request, "contact.html")
 
 
 def profile(request):
-    if request.session["user_id"]:
-        user = UserProfile.objects.get(email=request.session["user_email"])
-        return render(request, "profile.html", {"user": user})
-    else:
-        messages.success(request, "Please Login to Access this Page!")
+    try:
+        if request.session["user_id"]:
+            user = UserProfile.objects.get(email=request.session["user_email"])
+            return render(request, "profile.html", {"user": user})
+    except:
+        messages.error(request, "Please Login to Access profile!")
         return redirect("login")
+
+
+def update_profile(request):
+    if request.method == "POST":
+        user_email = request.POST.get("email")
+
+        # Check if the email already exists in the database
+        if (
+            UserProfile.objects.filter(email=user_email)
+            .exclude(id=request.session.get("user_id"))
+            .exists()
+        ):
+            messages.error(
+                request,
+                f"A profile with the same Email: {user_email} already exists.",
+            )
+            return redirect("profile")
+        user = UserProfile.objects.get(email=request.session.get("user_email"))
+        user.first_name = request.POST.get("first_name")
+        user.last_name = request.POST.get("last_name")
+        user.phone_number = request.POST.get("phone_number")
+        user.address = request.POST.get("address")
+
+        # Check if the email is being changed
+        if user.email != request.session.get("email"):
+            user.email = request.POST.get("email")
+            user.username = request.POST.get("email")
+            # Clear the session
+            request.session.flush()
+            request.session["user_email"] = user.email
+            request.session["user_name"] = user.first_name + " " + user.last_name
+            request.session["user_id"] = user.id
+            user.save()
+            messages.success(request, "Profile updated successfully.")
+            return redirect("profile")
+        else:
+            messages.error(request, "Somewthing went Wrong.")
+            return redirect("profile")
+    else:
+        return redirect("profile")
 
 
 def signup(request):
@@ -122,23 +172,59 @@ def user_logout(request):
     return redirect("index")
 
 
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-
 @csrf_exempt
 def update_data(request):
-    if request.method == 'POST':
-        voltage = request.POST.get('voltage', '')
-        ldr1 = request.POST.get('ldr1', '')
-        ldr2 = request.POST.get('ldr2', '')
-        servo_angle = request.POST.get('servoAngle', '')
+    if request.method == "POST":
+        try:
+            voltage = request.POST["voltage"]
+            ldrValue1 = request.POST["ldr1"]
+            ldrValue2 = request.POST["ldr2"]
+            servoAngle = request.POST["servoAngle"]
+            username = request.POST["username"]
+            # Save data to the database
+            sensor_data = SensorData.objects.create(
+                voltage=voltage,
+                ldrValue1=ldrValue1,
+                ldrValue2=ldrValue2,
+                servoAngle=servoAngle,
+                username=username,
+            )
+            sensor_data.save()
+            print(sensor_data)
+            return HttpResponse("Data received and saved successfully.", status=200)
+        except MultiValueDictKeyError:
+            return HttpResponse("Invalid form data.", status=400)
+    else:
+        print("something went wrong!!!")
+        return HttpResponse("Invalid request method.", status=400)
 
-        # You can process the data as needed (e.g., save to database)
-        # For now, just print it
-        print(f"Voltage: {voltage}, LDR 1: {ldr1}, LDR 2: {ldr2}, Servo Angle: {servo_angle}")
 
-        # You may want to return a response to the ESP32
-        return HttpResponse("Data received successfully.")
+def dashboard(request):
+    try:
+        if request.session["user_id"]:
+            # Get the latest sensor data entry
+            latest_sensor_data = SensorData.objects.order_by("-timestamp").first()
+            voltage_rotation = (latest_sensor_data.voltage / 5) * 180
+            ldr1_rotation = (latest_sensor_data.ldrValue1 / 4095) * 180
+            ldr2_rotation = (latest_sensor_data.ldrValue2 / 4095) * 180
+            servo_angle = (latest_sensor_data.servoAngle / 180) * 180
+            # Get all sensor data for the table
+            all_sensor_data = SensorData.objects.filter(
+                username=request.session["user_email"]
+            ).order_by("-timestamp")
 
-    return HttpResponse("Invalid request method.")
+            return render(
+                request,
+                "dashboard.html",
+                {
+                    "latest_sensor_data": latest_sensor_data,
+                    "all_sensor_data": all_sensor_data,
+                    "voltage_rotation": voltage_rotation,
+                    "ldr1_rotation": ldr1_rotation,
+                    "ldr2_rotation": ldr2_rotation,
+                    "servo_angle": servo_angle,
+                },
+            )
+    except:
+        messages.error(request, "please login to access dasboard!!")
+        return redirect("login")

@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        .gauge {
+            position: relative;
+            border-radius: 50%/100% 100% 0 0;
+            background-color: var(--color, #a22);
+            overflow: hidden;
+            margin: 0 auto;
+            /* Add this line to center the gauge horizontally */
+        }
+
+        .card {
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+            /* Smooth transition effect for box-shadow */
+        }
+
+        .card:hover {
+            box-shadow: 2px 4px 10px rgba(71, 58, 102, 0.242);
+            /* Box-shadow on hover */
+        }
+
+
+        .gauge:before {
+            content: "";
+            display: block;
+            padding-top: 50%;
+            /* ratio of 2:1*/
+        }
+
+        .gauge .chart {
+            overflow: hidden;
+        }
+
+        .gauge .mask {
+            position: absolute;
+            left: 20%;
+            right: 20%;
+            bottom: 0;
+            top: 40%;
+            background-color: #fff;
+            border-radius: 50%/100% 100% 0 0;
+        }
+
+        .gauge .percentage {
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            bottom: 0;
+            right: -1px;
+            background-color: var(--background, #aaa);
+            transform: rotate(var(--rotation));
+            transform-origin: bottom center;
+            transition-duration: 600;
+        }
+
+        .gauge:hover {
+            --rotation: 100deg;
+        }
+
+        .gauge .value {
+            position: absolute;
+            bottom: 0%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .gauge .min {
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+        }
+
+        .gauge .max {
+            position: absolute;
+            bottom: 0;
+            right: 5%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+
+        <h2 class="text-center mt-6" style="margin-top: 15%;">Sensor Data Dashboard</h2>
+
+        <!-- Latest Data Section -->
+        <div class="latest-data bg-light p-3">
+            <h3 class="text-center">Latest Data</h3>
+            {% if latest_sensor_data %}
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Servo Angle</h5>
+                            <div class="gauge-container">
+                                <div class="gauge"
+                                    style="width: 200px; --rotation: {{ servo_angle }}deg; --color:#735cb8; --background:#e9ecef;">
+                                    <div class="percentage"></div>
+                                    <div class="mask"></div>
+                                    <span class="value">{{ latest_sensor_data.servoAngle }}&deg;/180&deg;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Voltage</h5>
+                            <div class="gauge-container">
+                                <div class="gauge"
+                                    style="width: 200px; --rotation: {{ voltage_rotation }}deg; --color:#5cb85c; --background:#e9ecef;">
+                                    <div class="percentage"></div>
+                                    <div class="mask"></div>
+                                    <span class="value">{{ latest_sensor_data.voltage }}v/5v</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">LDR Value 1</h5>
+                            <div class="gauge-container">
+                                <div class="gauge"
+                                    style="width: 200px; --rotation: {{ ldr1_rotation }}deg; --color:#b88d5c; --background:#e9ecef;">
+                                    <div class="percentage"></div>
+                                    <div class="mask"></div>
+                                    <span class="value">{{ latest_sensor_data.ldrValue1 }}/4095</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">LDR Value 2</h5>
+                            <div class="gauge-container">
+                                <div class="gauge"
+                                    style="width: 200px; --rotation: {{ ldr2_rotation }}deg; --color:#f28305; --background:#e9ecef;">
+                                    <div class="percentage"></div>
+                                    <div class="mask"></div>
+                                    <span class="value">{{ latest_sensor_data.ldrValue2 }}/4095</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Timestamp</h5>
+                            <p class="card-text">{{ latest_sensor_data.timestamp }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% else %}
+            <p class="text-center">No data available.</p>
+            {% endif %}
+        </div>
+
+
+        <!-- Table Section -->
+        <h1 class="text-center">Log Table</h1>
+        <table class="table mt-4">
+            <thead class="thead-light">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Voltage</th>
+                    <th>LDR Value 1</th>
+                    <th>LDR Value 2</th>
+                    <th>Servo Angle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in all_sensor_data %}
+                <tr>
+                    <td>{{ data.timestamp }}</td>
+                    <td>{{ data.voltage }}</td>
+                    <td>{{ data.ldrValue1 }}</td>
+                    <td>{{ data.ldrValue2 }}</td>
+                    <td>{{ data.servoAngle }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        function updateLatestData() {
+            $.ajax({
+                url: '/dashboard/',
+                type: 'GET',
+                success: function (data) {
+                    var latestData = $(data).find('.latest-data').html();
+                    $(".latest-data").html(latestData);
+                },
+                error: function (error) {
+                    console.error("Error updating latest data:", error);
+                }
+            });
+        }
+
+        setInterval(updateLatestData, 5000);
+        updateLatestData();
+    });
+</script>
+
+</html>
+{% endblock %}

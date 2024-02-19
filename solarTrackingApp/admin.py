@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile
+from .models import Contact, UserProfile, SensorData
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -8,3 +8,20 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserProfile, UserProfileAdmin)
+
+
+class SensorDataAdmin(admin.ModelAdmin):
+    list_filter = ("timestamp", "servoAngle", "voltage")
+    list_display = ("timestamp", "servoAngle", "voltage")
+
+
+admin.site.register(SensorData, SensorDataAdmin)
+
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "subject", "message")
+    search_fields = ("name", "email", "subject")
+    list_filter = ("subject",)
+
+
+admin.site.register(Contact, ContactAdmin)

@@ -1,360 +1,281 @@
-
-
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content  %}
-    <!-- About Start -->
-    <div class="container-fluid py-5" id="about">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-5">
-                    <img class="img-fluid mb-4 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">
-                </div>
-                <div class="col-lg-7">
-                    <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">About Us</h6>
-                    <h1 class="display-4 mb-3"><span class="text-primary">25+ Years Experience</span> In Solar Power
-                        Industry</h1>
-                    <p>At sed est eirmod sanctus et amet diam magna. Dolore clita magna sed sed stet et, at magna rebum
-                        eirmod sanctus ut sed, stet tempor dolore rebum sit duo, dolore tempor sit est sit sanctus, sit
-                        justo sit invidunt clita ut justo diam magna. Erat eos nonumy labore dolor. Dolore kasd no et et
-                        et elitr. Erat sea dolor elitr diam sed lorem rebum et vero. </p>
-                    <a class="btn btn-primary font-weight-bold py-3 px-5 mt-2" type="button" data-toggle="modal"
-                        data-target="#exampleModalLong">Read More</a>
-                </div>
+{% block content %}
+
+<!-- About Start -->
+<div class="container-fluid py-5" id="about">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <img class="img-fluid mb-4 mb-lg-0" src="{% static 'img/about.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-7">
+                <h6 class="text-uppercase text- primary mb-3" style="letter-spacing: 3px;">About Us</h6>
+                <h1 class="display-4 mb-3"><span class="text-primary">New Tech Innovators</span> CHE Students of GPTC
+                    Cherthala </h1>
+                <p> We are Computer Hardware Computer Hardware Engineering Studenting students of GOVT. Polytechnic
+                    College,Cherthala,Alappuzha</p>
+                <a class="btn btn-primary font-weight-bold py-3 px-5 mt-2 rounded" style="color: white;" type="button"
+                    data-toggle="modal" data-target="#exampleModalLong">Read More</a>
             </div>
         </div>
     </div>
-    <!-- About End -->
+</div>
+<!-- About End -->
 
+<!-- Team Start -->
+<div class="container-fluid py-5" id="team">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Team</h6>
+            <h1 class="font-secondary display-4">Meet The Team</h1>
+        </div>
+        <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
+            <div class="col-lg-6 p-0">
+                <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/karan_k_binu.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="col-sm-6 p-0 text-center">
+                        <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
+                            <h5 class="mb-2">Karan k binu</h5>
+                            <p class="text-muted font-italic mb-2">Team Lead</p>
+                            <p>This is my world.I'm the Teamlead of solar tracking system Team</p>
+                            <div class="position-relative mb-2">
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-github"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- Service Start -->
-    <div class="container-fluid py-5" id="service">
-        <div class="container py-5">
-            <div class="section-title position-relative text-center">
-                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Services</h6>
-                <h1 class="font-secondary display-4">What We Cover</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 mb-3">
-                    <div class="product-item mb-2">
-                        <div class="product-img">
-                            <img class="img-fluid" src="{% static 'img/product-1.jpg' %}" alt="">
-                            <a type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalLong">
-                                <i class="fa fa-2x fa-plus text-white"></i>
-                            </a>
-                        </div>
-                        <div class="bg-secondary text-center p-4">
-                            <h3 class="m-0">Solar Tracking System</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-3">
-                    <div class="product-item mb-2">
-                        <div class="product-img">
-                            <img class="img-fluid" src="{% static 'img/product-2.jpg' %}" alt="">
-                            <a type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalLong">
-                                <i class="fa fa-2x fa-plus text-white"></i>
-                            </a>
-                        </div>
-                        <div class="bg-secondary text-center p-4">
-                            <h3 class="m-0">Wind Turbine</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-3">
-                    <div class="product-item mb-2">
-                        <div class="product-img">
-                            <img class="img-fluid" src="{% static 'img/product-3.jpg' %}" alt="">
-                            <a type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalLong">
-                                <i class="fa fa-2x fa-plus text-white"></i>
-                            </a>
-                        </div>
-                        <div class="bg-secondary text-center p-4">
-                            <h3 class="m-0">Wind Generator</h3>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Service End -->
 
-
-
-    <!-- Team Start -->
-    <div class="container-fluid py-5" id="team">
-        <div class="container py-5">
-            <div class="section-title position-relative text-center">
-                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Team</h6>
-                <h1 class="font-secondary display-4">Meet The Team</h1>
-            </div>
-            <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
-                <div class="col-lg-6 p-0">
-                    <div class="row m-0">
-                        <div class="col-sm-6 p-0 text-center">
-                            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                                <h5 class="mb-2">Donald John</h5>
-                                <p class="text-muted font-italic mb-2">CEO & Founder</p>
-                                <p>Lorem elitr magna stet rebum dolores sed. Est stet labore est lorem lorem</p>
-                                <div class="position-relative mb-2">
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 p-0" style="min-height: 300px;">
-                            <img class="position-absolute w-100 h-100" src="{% static 'img/team-1.jpg' %}"
-                                style="object-fit: cover;">
-                        </div>
+        <div class="row justify-content-lg-end m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
+            <div class="col-lg-6 p-0">
+                <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/akshar.jpg' %}"
+                            style="object-fit: cover;">
                     </div>
-                </div>
-            </div>
-            <div class="row justify-content-lg-end m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
-                <div class="col-lg-6 p-0">
-                    <div class="row m-0">
-                        <div class="col-sm-6 p-0" style="min-height: 300px;">
-                            <img class="position-absolute w-100 h-100" src="{% static 'img/team-2.jpg' %}"
-                                style="object-fit: cover;">
-                        </div>
-                        <div class="col-sm-6 p-0 text-center">
-                            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                                <h5 class="mb-2">Adam Phillips</h5>
-                                <p class="text-muted font-italic mb-2">Engineer</p>
-                                <p>Lorem elitr magna stet rebum dolores sed. Est stet labore est lorem lorem</p>
-                                <div class="position-relative mb-2">
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
-                <div class="col-lg-6 p-0">
-                    <div class="row m-0">
-                        <div class="col-sm-6 p-0 text-center">
-                            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                                <h5 class="mb-2">Thomas Olsen</h5>
-                                <p class="text-muted font-italic mb-2">Engineer</p>
-                                <p>Lorem elitr magna stet rebum dolores sed. Est stet labore est lorem lorem</p>
-                                <div class="position-relative mb-2">
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 p-0" style="min-height: 300px;">
-                            <img class="position-absolute w-100 h-100" src="{% static 'img/team-3.jpg' %}"
-                                style="object-fit: cover;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-lg-end m-0">
-                <div class="col-lg-6 p-0">
-                    <div class="row m-0">
-                        <div class="col-sm-6 p-0" style="min-height: 300px;">
-                            <img class="position-absolute w-100 h-100" src="{% static 'img/team-4.jpg' %}"
-                                style="object-fit: cover;">
-                        </div>
-                        <div class="col-sm-6 p-0 text-center">
-                            <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                                <h5 class="mb-2">James Alien</h5>
-                                <p class="text-muted font-italic mb-2">Engineer</p>
-                                <p>Lorem elitr magna stet rebum dolores sed. Est stet labore est lorem lorem</p>
-                                <div class="position-relative mb-2">
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                            class="fab fa-linkedin-in"></i></a>
-                                </div>
+                    <div class="col-sm-6 p-0 text-center">
+                        <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
+                            <h5 class="mb-2">Akshar gitanand</h5>
+                            <p class="text-muted font-italic mb-2">Engineer</p>
+                            <p>Team Member</p>
+                            <div class="position-relative mb-2">
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-facebook-f"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Team End -->
-    <!-- Testimonial Start -->
-    <div class="container-fluid py-5" id="testimonial">
-        <div class="container py-5">
-            <div class="section-title position-relative text-center" style="margin-bottom: 120px;">
-                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Testimonial</h6>
-                <h1 class="display-4">Our Clients Say</h1>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="owl-carousel testimonial-carousel">
-                        <div class="text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-1.jpg' %}"
-                                style="width: 100px;">
-                            <p style="font-size: 22px;">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum
-                                elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod
-                                eos labore diam</p>
-                            <h4>Client Name</h4>
-                            <span>Profession</span>
+        <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
+            <div class="col-lg-6 p-0">
+                <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/fathima.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="col-sm-6 p-0 text-center">
+                        <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
+                            <h5 class="mb-2">Fathima shajudeen</h5>
+                            <p class="text-muted font-italic mb-2">Engineer</p>
+                            <p>Team Member</p>
+                            <div class="position-relative mb-2">
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-facebook-f"></i></a>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-2.jpg' %}"
-                                style="width: 100px;">
-                            <p style="font-size: 22px;">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum
-                                elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod
-                                eos labore diam</p>
-                            <h4>Client Name</h4>
-                            <span>Profession</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-lg-end m-0">
+            <div class="col-lg-6 p-0">
+                <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/Sanju.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="col-sm-6 p-0 mb-4 text-center">
+                        <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
+                            <h5 class="mb-2">Sanju gireesh</h5>
+                            <p class="text-muted font-italic mb-2">Engineer</p>
+                            <p>Team Member</p>
+                            <div class="position-relative mb-2">
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-facebook-f"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Testimonial End -->
+        <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
+            <div class="col-lg-6 p-0">
+                <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/bidhul.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="col-sm-6 p-0 text-center">
+                        <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
+                            <h5 class="mb-2">Bidhul binoy</h5>
+                            <p class="text-muted font-italic mb-2">Engineer</p>
+                            <p>Team Member</p>
+                            <div class="position-relative mb-2">
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
 
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
-        <div class="row pt-5">
-            <div class="col-12 mb-4 px-4">
-                <div class="row mb-5 p-4" style="background: rgba(256, 256, 256, .05);">
-                    <div class="col-md-4">
-                        <div class="text-md-center">
-                            <h5 class="text-primary text-uppercase mb-2" style="letter-spacing: 5px;">Our Office</h5>
-                            <p class="mb-4 m-md-0">123 Street, New York, USA</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-md-center">
-                            <h5 class="text-primary text-uppercase mb-2" style="letter-spacing: 5px;">Email Us</h5>
-                            <p class="mb-4 m-md-0">info@example.com</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="text-md-center">
-                            <h5 class="text-primary text-uppercase mb-2" style="letter-spacing: 5px;">Call Us</h5>
-                            <p class="m-0">+012 345 6789</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7 col-md-12">
-                <div class="row">
-                    <div class="col-md-6 mb-5">
-                        <p>Et et amet ut elitr ipsum sit dolor dolor dolore. Sit accusam elitr ut diam sit rebum. Eirmod
-                            duo kasd diam vero labore sea, est et et lorem ut at erat, gubergren ipsum et ipsum elitr et
-                            rebum rebum</p>
-                        <div class="d-flex justify-content-start mt-4">
-                            <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#"><i
-                                    class="fab fa-twitter"></i></a>
-                            <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-lg btn-outline-light btn-lg-square" href="#"><i
-                                    class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-5">
-                        <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Our Products</h5>
-                        <div class="d-flex flex-column justify-content-start">
-                            <a class="text-white btn-scroll mb-2" href="#service"><i
-                                    class="fa fa-angle-right mr-2"></i>Solar Tracking System</a>
-                            <a class="text-white btn-scroll mb-2" href="#service"><i
-                                    class="fa fa-angle-right mr-2"></i>Wind Turbine</a>
-                            <a class="text-white btn-scroll mb-2" href="#service"><i
-                                    class="fa fa-angle-right mr-2"></i>Wind Generator</a>
-                            <a class="text-white btn-scroll mb-2" href="#service"><i
-                                    class="fa fa-angle-right mr-2"></i>Solar Tracking System</a>
-                            <a class="text-white btn-scroll" href="#service"><i class="fa fa-angle-right mr-2"></i>Solar
-                                Panel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-12 mb-5">
-                <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Newsletter</h5>
-                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu
-                    kasd sed ea duo ipsum. Dolor duo eirmod sea justo no lorem est diam</p>
-                <div class="w-100">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-light" style="padding: 30px;"
-                            placeholder="Your Email Address">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary px-4">Sign Up</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-dark text-white text-center border-top py-4 px-sm-3 px-md-5"
-        style="border-color: rgba(256, 256, 256, .05) !important;">
-        <p class="m-0 text-white">&copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed by <a
-                href="https://htmlcodex.com">HTML Codex</a></p>
+</div>
+
+
+<!-- Team End -->
+
+
+<!-- Service Start -->
+<div class="container-fluid py-5" id="service">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Services</h6>
+            <h1 class="font-secondary display-4">What We Cover</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mb-3 text-center">
+                <div class="product-item mb-2">
+                    <div class="product-img">
+                        <img class="img-fluid" src="{% static 'img/product-1.jpg' %}" alt="">
+                        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                            <i class="fa fa-2x fa-plus text-white"></i>
+                        </a>
+                    </div>
+                    <div class="bg-secondary text-center p-4">
+                        <h3 class="m-0">Solar Tracking System</h3>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-    <!-- Footer End -->
+</div>
+<!-- Service End -->
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Solar Tracking System System</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img class="img-fluid mb-4" src="{% static 'img/carousel-1.jpg' %}" alt="">
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                    <p>Sit eos diam rebum amet stet sit lorem invidunt, kasd dolor ea dolores ut nonumy, sea est rebum
-                        dolore dolor. Lorem tempor tempor gubergren dolor dolor dolor. Kasd amet labore voluptua justo
-                        diam, dolore accusam duo est stet nonumy tempor dolores sadipscing duo. Stet at et nonumy erat
-                        et sed.</p>
-                </div>
+<!-- Gallery Start -->
+<div class="container-fluid bg-gallery" id="project" style="padding: 120px 0; margin: 90px 0;">
+    <div class="section-title position-relative text-center" style="margin-bottom: 120px;">
+        <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Project</h6>
+        <h1 class="font-secondary display-4 text-white">Project Photo Gallery</h1>
+    </div>
+    <div class="owl-carousel gallery-carousel">
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-1.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-1.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-2.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-2.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-3.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-3.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-4.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-4.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-5.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-5.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <img class="img-fluid w-100" src="{% static 'img/gallery-6.jpg' %}" alt="">
+            <a class="btn btn-primary" href="{% static 'img/gallery-6.jpg' %}" data-lightbox="gallery">
+                <i class="fa fa-2x fa-plus text-white"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Gallery End -->
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Solar Tracking System System</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="img-fluid mb-4" src="{% static 'img/carousel-1.jpg' %}" alt="">
+                <p>Experience the efficiency of our solar tracking system, dynamically aligning panels with the sun's
+                    position for optimal energy capture. This advanced sun monitoring technology ensures continuous
+                    alignment with the sun's path across the sky, maximizing sunlight exposure and energy output.</p>
+
+                <p>Solar panels and concentrated solar power systems convert sunlight into electricity, reaching peak
+                    efficiency when the sun is directly overhead. Our solar trackers extend this peak efficiency by
+                    dynamically adjusting the system's orientation, increasing overall efficiency by up to 40% and
+                    ensuring prolonged periods of optimal performance throughout the day.</p>
+
+                <p>Even on cloudy days, our solar tracking system enhances power output. By adapting the angle of solar
+                    panels or other energy systems, it maximizes sunlight capture, overcoming limitations posed by cloud
+                    cover and optimizing energy production even in suboptimal conditions.</p>
+
             </div>
         </div>
     </div>
-    <!-- Modal -->
+</div>
+<!-- Modal -->
 
 {% endblock %}

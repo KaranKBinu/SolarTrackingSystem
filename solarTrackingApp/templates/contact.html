@@ -1,61 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content  %}
+{% block content %}
 
-    <!-- Contact Start -->
-    <div class="container-fluid py-5" id="contact">
-        <div class="container py-5">
-            <div class="section-title position-relative text-center">
-                <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Contact</h6>
-                <h1 class="font-secondary display-4">Get In Touch</h1>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="contact-form">
-                        {% block error_messages %}
-                        {{ block.super }}
-                        {% endblock %}
-                        <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                            <div class="form-row">
-                                <div class="col-sm-6 control-group">
-                                    <input type="text" class="form-control bg-secondary border-1 py-4 px-3" id="name"
-                                        placeholder="Your Name" required="required"
-                                        data-validation-required-message="Please enter your name" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="col-sm-6 control-group">
-                                    <input type="email" class="form-control bg-secondary border-1 py-4 px-3" id="email"
-                                        placeholder="Your Email" required="required"
-                                        data-validation-required-message="Please enter your email" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
+<!-- Contact Start -->
+<div class="container-fluid py-5" id="contact">
+    <div class="container py-5">
+        <div class="section-title position-relative text-center">
+            <h6 class="text-uppercase text-primary" style="letter-spacing: 3px;">Contact</h6>
+            <h1 class="font-secondary display-4">Get In Touch</h1>
+        </div>
+        {% block error_messages %}
+        {{ block.super }}
+        {% endblock %}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card p-4 text-center"
+                    style="background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+                    <form method="post" id="contactUsForm" action="{% url 'contact' %}" class="needs-validation"
+                        novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name"
+                                required
+                                style="background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 5px;">
+                            <div class="invalid-feedback">
+                                Please enter your name.
                             </div>
-                            <div class="control-group">
-                                <input type="text" class="form-control bg-secondary border-1 py-4 px-3" id="subject"
-                                    placeholder="Subject" required="required"
-                                    data-validation-required-message="Please enter a subject" />
-                                <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email"
+                                required
+                                style="background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 5px;">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address.
                             </div>
-                            <div class="control-group">
-                                <textarea class="form-control bg-secondary border-1 py-2 px-3" rows="6" id="message"
-                                    placeholder="Message" required="required"
-                                    data-validation-required-message="Please enter your message"></textarea>
-                                <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject:</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject"
+                                required
+                                style="background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 5px;">
+                            <div class="invalid-feedback">
+                                Please enter a subject.
                             </div>
-                            <div class="text-center">
-                                <button class="btn btn-primary font-weight-bold py-3 px-5" type="submit"
-                                    id="sendMessageButton">Send Message</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea class="form-control" id="message" name="message" rows="5"
+                                placeholder="Your Message" required
+                                style="background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 5px;"></textarea>
+                            <div class="invalid-feedback">
+                                Please enter your message.
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="background-color: #007bff; border: none; border-radius: 5px; padding: 10px 20px;">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Contact End -->
+</div>
+<!-- Contact End -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        'use strict';
 
+        var form = document.getElementById('contactUsForm');
 
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+        });
+
+        // Adding focus event listener to remove validation classes on focus
+        var formElements = form.elements;
+        for (var i = 0; i < formElements.length; i++) {
+            formElements[i].addEventListener('focus', function () {
+                form.classList.remove('was-validated');
+            });
+        }
+    });
+</script>
 
 {% endblock %}

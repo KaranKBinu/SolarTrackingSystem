@@ -85,8 +85,8 @@
                 <h1 class="display-4 mb-3"><span class="text-primary">New Tech Innovators</span> CHE Students of GPTC
                     Cherthala </h1>
                 <p> We are Computer Hardware Engineering students of GOVT. Polytechnic College,Cherthala,Alappuzha</p>
-                <a class="btn btn-primary font-weight-bold py-3 px-5 mt-2" type="button" data-toggle="modal"
-                    data-target="#exampleModalLong">Read More</a>
+                <a class="btn btn-primary font-weight-bold py-3 px-5 mt-2 rounded-pill  " style="color: white;"
+                    type="button" href="{% url 'about' %}">Learn More About Us</a>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
             <h1 class="font-secondary display-4">What We Cover</h1>
         </div>
         <div class="row">
-            <div class="col-lg-4 mb-3">
+            <div class="col-lg-12 mb-3 text-center">
                 <div class="product-item mb-2">
                     <div class="product-img">
                         <img class="img-fluid" src="{% static 'img/product-1.jpg' %}" alt="">
@@ -115,32 +115,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-3">
-                <div class="product-item mb-2">
-                    <div class="product-img">
-                        <img class="img-fluid" src="{% static 'img/product-2.jpg' %}" alt="">
-                        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                            <i class="fa fa-2x fa-plus text-white"></i>
-                        </a>
-                    </div>
-                    <div class="bg-secondary text-center p-4">
-                        <h3 class="m-0">Wind Turbine</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <div class="product-item mb-2">
-                    <div class="product-img">
-                        <img class="img-fluid" src="{% static 'img/product-3.jpg' %}" alt="">
-                        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                            <i class="fa fa-2x fa-plus text-white"></i>
-                        </a>
-                    </div>
-                    <div class="bg-secondary text-center p-4">
-                        <h3 class="m-0">Wind Generator</h3>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
     </div>
 </div>
@@ -205,25 +181,26 @@
         <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
             <div class="col-lg-6 p-0">
                 <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/karan_k_binu.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
                     <div class="col-sm-6 p-0 text-center">
                         <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
                             <h5 class="mb-2">Karan k binu</h5>
-                            <p class="text-muted font-italic mb-2">CEO & Founder</p>
-                            <p>This is my world.I'm the CEO of solar tracking system</p>
+                            <p class="text-muted font-italic mb-2">Team Lead</p>
+                            <p>This is my world.I'm the Teamlead of solar tracking system Team</p>
                             <div class="position-relative mb-2">
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-twitter"></i></a>
+                                        class="fab fa-whatsapp"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-facebook-f"></i></a>
+                                        class="fab fa-github"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
                                         class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-0" style="min-height: 300px;">
-                        <img class="position-absolute w-100 h-100" src="{% static 'img/team-1.jpg' %}"
-                            style="object-fit: cover;">
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -239,14 +216,14 @@
                         <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
                             <h5 class="mb-2">Akshar gitanand</h5>
                             <p class="text-muted font-italic mb-2">Engineer</p>
-                            <p>Engineer of solar tracking system</p>
+                            <p>Team Member</p>
                             <div class="position-relative mb-2">
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-twitter"></i></a>
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
                                         class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                     </div>
@@ -256,25 +233,26 @@
         <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
             <div class="col-lg-6 p-0">
                 <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/fathima.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
                     <div class="col-sm-6 p-0 text-center">
                         <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                            <h5 class="mb-2">Sanju gireesh</h5>
+                            <h5 class="mb-2">Fathima shajudeen</h5>
                             <p class="text-muted font-italic mb-2">Engineer</p>
-                            <p>Engineer of solar tracking system</p>
+                            <p>Team Member</p>
                             <div class="position-relative mb-2">
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-twitter"></i></a>
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
                                         class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-0" style="min-height: 300px;">
-                        <img class="position-absolute w-100 h-100" src="{% static 'img/Sanju.jpg' %}"
-                            style="object-fit: cover;">
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -282,21 +260,21 @@
             <div class="col-lg-6 p-0">
                 <div class="row m-0">
                     <div class="col-sm-6 p-0" style="min-height: 300px;">
-                        <img class="position-absolute w-100 h-100" src="{% static 'img/team-4.jpg' %}"
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/Sanju.jpg' %}"
                             style="object-fit: cover;">
                     </div>
-                    <div class="col-sm-6 p-0 text-center">
+                    <div class="col-sm-6 p-0 mb-4 text-center">
                         <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
-                            <h5 class="mb-2">Fathima shajudeen</h5>
+                            <h5 class="mb-2">Sanju gireesh</h5>
                             <p class="text-muted font-italic mb-2">Engineer</p>
-                            <p>Engineer of solar tracking system</p>
+                            <p>Team Member</p>
                             <div class="position-relative mb-2">
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-twitter"></i></a>
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
                                         class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                     </div>
@@ -306,25 +284,26 @@
         <div class="row justify-content-lg-start m-0 mb-4 pb-2 mb-sm-0 pb-sm-0">
             <div class="col-lg-6 p-0">
                 <div class="row m-0">
+                    <div class="col-sm-6 p-0" style="min-height: 300px;">
+                        <img class="position-absolute w-100 h-100" src="{% static 'img/bidhul.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
                     <div class="col-sm-6 p-0 text-center">
                         <div class="h-100 d-flex flex-column justify-content-center bg-secondary p-4">
                             <h5 class="mb-2">Bidhul binoy</h5>
                             <p class="text-muted font-italic mb-2">Engineer</p>
-                            <p>Engineer of solar tracking system</p>
+                            <p>Team Member</p>
                             <div class="position-relative mb-2">
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-twitter"></i></a>
+                                        class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
+                                        class="fab fa-whatsapp"></i></a>
                                 <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
                                         class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-outline-primary btn-square mr-1" href="#"><i
-                                        class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-0" style="min-height: 300px;">
-                        <img class="position-absolute w-100 h-100" src="{% static 'img/team-1.jpg' %}"
-                            style="object-fit: cover;">
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -346,128 +325,45 @@
             <div class="col-md-6 border-right border-primary">
                 <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0">
                     <h3 class="mb-4">Why Switch to Solar?</h3>
-                    <h5 class="mb-3"><i class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Vero
-                        dolor amet
-                        no eos ipsum erat</h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Lorem
-                        tempor
-                        tempor gubergren dolor dolor dolor</h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Nonumy
-                        tempor
-                        dolores sadipscing duo</h5>
-                    <h5 class="mb-0"><i class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Kasd
-                        dolor ea
-                        dolores ut nonumy</h5>
+                    <h5 class="mb-3"><i
+                            class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Experience our
+                        solar tracking system, a student innovation from GPTC Cherthala Computer Hardware Engineering
+                        Department.</h5>
+                    <h5 class="mb-3"><i
+                            class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Efficiently harness
+                        solar energy for a sustainable future.</h5>
+                    <h5 class="mb-3"><i
+                            class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Optimize power
+                        generation with our single-axis solar tracking technology.</h5>
+                    <h5 class="mb-0"><i class="fa fa-check text-success float-md-right mr-2 mr-md-0 ml-md-2"></i>Join us
+                        in contributing to a greener planet through innovative solar solutions.</h5>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="text-center text-md-left ml-md-3">
                     <h3 class="mb-4">Why Choose Us?</h3>
-                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Vero dolor amet no eos ipsum erat
+                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Benefit from our students' dedication
+                        to excellence in solar tracking technology.</h5>
+                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Explore a reliable and cost-effective
+                        solar energy solution tailored by GPTC Cherthala's Computer Hardware Engineering Department.
                     </h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Lorem tempor tempor gubergren
-                        dolor dolor dolor</h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Nonumy tempor dolores sadipscing
-                        duo</h5>
-                    <h5 class="mb-0"><i class="fa fa-check text-success mr-2"></i>Kasd dolor ea dolores ut nonumy
-                    </h5>
+                    <h5 class="mb-3"><i class="fa fa-check text-success mr-2"></i>Experience cutting-edge innovation
+                        with our commitment to sustainable energy practices.</h5>
+                    <h5 class="mb-0"><i class="fa fa-check text-success mr-2"></i>Trust in the expertise of tomorrow's
+                        engineers delivering top-notch solar tracking systems.</h5>
                 </div>
             </div>
             <div class="col-md-12 text-center pt-3">
-                <a class="btn btn-primary font-weight-bold py-3 px-5 mt-4 btn-scroll" href="#contact">Get A
-                    Quote</a>
+                <a class="btn btn-primary font-weight-bold py-3 px-5 mt-4 btn-scroll" href="{% url 'contact' %}">Contact
+                    and Support</a>
             </div>
         </div>
     </div>
 </div>
+
 <!-- FAQs End -->
 
 
-<!-- Testimonial Start -->
-<div class="container-fluid py-5" id="testimonial">
-    <div class="container py-5">
-        <div class="section-title position-relative text-center" style="margin-bottom: 120px;">
-            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Testimonial</h6>
-            <h1 class="display-4">Our Clients Say</h1>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="owl-carousel testimonial-carousel">
-                    <div class="text-center">
-                        <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-1.jpg' %}"
-                            style="width: 100px;">
-                        <p style="font-size: 22px;">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum
-                            elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod
-                            eos labore diam</p>
-                        <h4>Client Name</h4>
-                        <span>Profession</span>
-                    </div>
-                    <div class="text-center">
-                        <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-2.jpg' %}"
-                            style="width: 100px;">
-                        <p style="font-size: 22px;">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum
-                            elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod
-                            eos labore diam</p>
-                        <h4>Client Name</h4>
-                        <span>Profession</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Testimonial End -->
-
-
-<!-- Contact Start -->
-<div class="container-fluid py-5" id="contact">
-    <div class="container py-5">
-        <div class="section-title position-relative text-center">
-            <h6 class="text-uppercase text-primary mb-3" style="letter-spacing: 3px;">Contact</h6>
-            <h1 class="font-secondary display-4">Get In Touch</h1>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="contact-form">
-                    <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                        <div class="form-row">
-                            <div class="col-sm-6 control-group">
-                                <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="name"
-                                    placeholder="Your Name" required="required"
-                                    data-validation-required-message="Please enter your name" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="col-sm-6 control-group">
-                                <input type="email" class="form-control bg-secondary border-0 py-4 px-3" id="email"
-                                    placeholder="Your Email" required="required"
-                                    data-validation-required-message="Please enter your email" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <input type="text" class="form-control bg-secondary border-0 py-4 px-3" id="subject"
-                                placeholder="Subject" required="required"
-                                data-validation-required-message="Please enter a subject" />
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="control-group">
-                            <textarea class="form-control bg-secondary border-0 py-2 px-3" rows="6" id="message"
-                                placeholder="Message" required="required"
-                                data-validation-required-message="Please enter your message"></textarea>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary font-weight-bold py-3 px-5" type="submit"
-                                id="sendMessageButton">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Contact End -->
 
 
 <!-- Modal -->
@@ -483,23 +379,19 @@
             </div>
             <div class="modal-body">
                 <img class="img-fluid mb-4" src="{% static 'img/carousel-1.jpg' %}" alt="">
-                <p>A solar tracker positions the solar panels at an angle directed to the sun. It is an advanced
-                    sun monitoring system that can rotate the panels to track the movement of the sun across the sky.
-                    It facilitates the panel system to trap the maximum sunlight and optimise the energy output.
-                    There are considerable advantages to using a solar energy tracker. </p>
-                <p>Solar panels and concentrated solar power systems can generate electricity by converting sunlight
-                    into electricity.Solar panels and concentrated solar power systems are typically rated for peak
-                    efficiency when the
-                    sun is directly overhead. Solar trackers help maintain this level of maximal efficiency for more
-                    prolonged periods during day by keeping the solar energy systems aligned with the sun’s path.
-                    In some cases, solar trackers can increase a solar energy system’s efficiency by up to 40%. </p>
-                <p>solar tracking can also improve the power output of solar panels and concentrated solar power systems
-                    on cloudy days.
-                    Although cloud cover limits the amount of sunlight that reaches the ground,solar trackers can still
-                    optimize solar energy
-                    capture by adapting the angle of the solar panels or other solar energy systems to maximize the
-                    available sunlight,
-                    even in suboptimal conditions.</p>
+                <p>Experience the efficiency of our solar tracking system, dynamically aligning panels with the sun's
+                    position for optimal energy capture. This advanced sun monitoring technology ensures continuous
+                    alignment with the sun's path across the sky, maximizing sunlight exposure and energy output.</p>
+
+                <p>Solar panels and concentrated solar power systems convert sunlight into electricity, reaching peak
+                    efficiency when the sun is directly overhead. Our solar trackers extend this peak efficiency by
+                    dynamically adjusting the system's orientation, increasing overall efficiency by up to 40% and
+                    ensuring prolonged periods of optimal performance throughout the day.</p>
+
+                <p>Even on cloudy days, our solar tracking system enhances power output. By adapting the angle of solar
+                    panels or other energy systems, it maximizes sunlight capture, overcoming limitations posed by cloud
+                    cover and optimizing energy production even in suboptimal conditions.</p>
+
             </div>
         </div>
     </div>

@@ -1,46 +1,131 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <div class="container py-5">
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-8">
-            <div class="card mt-4">
-                <div class="card-header text-center text-white">
-                    <h5 class="text-uppercase mb-3">Profile</h5>
-                    <h1 class="font-secondary display-4" style="text-transform: capitalize;">
-                        Hello, {{ user.first_name}}</h1>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <th scope="row">First Name</th>
-                                    <td>{{ user.first_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Last Name</th>
-                                    <td>{{ user.last_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Email</th>
-                                    <td>{{ user.email }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Phone</th>
-                                    <td>{{ user.phone_number }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Address</th>
-                                    <td>{{ user.address }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+      <div class="card mt-4 text-center bg-light">
+        <div class="card-header text-center text-white">
+          <h5 class="text-uppercase mb-3">Profile</h5>
+          {% block error_messages %} {{ block.super }} {% endblock %}
+          <h1 class="font-secondary display-4" style="text-transform: capitalize">
+            Hello, {{ user.first_name }}
+          </h1>
         </div>
+        <div class="card-body text-center">
+          <form method="post" action="{% url 'update_profile' %}">
+            {% csrf_token %}
+            <div class="table-responsive ">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th scope="row" class="align-middle">First Name</th>
+                    <td>
+                      <div class="editable-field">
+                        <span class="field-value" data-field="first_name">{{ user.first_name }}</span>
+                        <input type="text" name="first_name" value="{{ user.first_name }}"
+                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <span class="edit-icon" onclick="toggleEdit('first_name')"><i class="fas fa-edit"></i></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Last Name</th>
+                    <td>
+                      <div class="editable-field">
+                        <span class="field-value" data-field="last_name">{{ user.last_name }}</span>
+                        <input type="text" name="last_name" value="{{ user.last_name }}"
+                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <span class="edit-icon" onclick="toggleEdit('last_name')"><i class="fas fa-edit"></i></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Email</th>
+                    <td>
+                      <div class="editable-field">
+                        <span class="field-value" data-field="email">{{ user.email }}</span><br>
+                        <small><strong>
+                            <span style="color: red;">Caution :</span>Changing Email Also changes Username as the new
+                            email
+                          </strong></small>
+                        <input type="email" name="email" value="{{ user.email }}"
+                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <span class="edit-icon" onclick="toggleEdit('email')"><i class="fas fa-edit"></i></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Phone</th>
+                    <td>
+                      <div class="editable-field">
+                        <span class="field-value" data-field="phone_number">{{ user.phone_number }}</span>
+                        <input type="text" name="phone_number" value="{{ user.phone_number }}"
+                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <span class="edit-icon" onclick="toggleEdit('phone_number')"><i class="fas fa-edit"></i></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Address</th>
+                    <td>
+                      <div class="editable-field">
+                        <span class="field-value" data-field="address">{{ user.address }}</span>
+                        <input type="text" name="address" value="{{ user.address }}"
+                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <span class="edit-icon" onclick="toggleEdit('address')"><i class="fas fa-edit"></i></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-pill mt-3">Update Profile</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<style>
+  .hidden-input {
+    display: none;
+  }
+
+  .edit-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #007bff;
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".editable-field input").forEach(function (input) {
+    input.classList.add("hidden-input");
+  });
+
+  function toggleEdit(fieldName) {
+    const fieldValue = document.querySelector(`.editable-field .field-value[data-field="${fieldName}"]`);
+    const inputField = document.querySelector(`.editable-field input[name="${fieldName}"]`);
+
+    fieldValue.classList.toggle("hidden");
+    inputField.classList.toggle("hidden-input");
+
+    if (!fieldValue.classList.contains("hidden")) {
+      inputField.focus();
+    }
+  }
+</script>
+
 {% endblock %}
