@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+{%block title %}
+{%if request.session.user_name %}
+{{request.session.user_name}}'s Dashboard
+{%else%}
+Dashboard
+{% endif%}
+{%endblock %}
 
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
@@ -87,6 +96,10 @@
             bottom: 0;
             right: 5%;
         }
+
+        .filter-form {
+            display: none;
+        }
     </style>
 </head>
 
@@ -94,6 +107,7 @@
     <div class="container mt-4">
 
         <h2 class="text-center mt-6" style="margin-top: 15%;">Sensor Data Dashboard</h2>
+        {% if latest_sensor_data.username == request.session.user_email %}
 
         <!-- Latest Data Section -->
         <div class="latest-data bg-light p-3">
@@ -104,7 +118,7 @@
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">Servo Angle</h5>
+                            <h5 class="card-title">Current Panel angle</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
                                     style="width: 200px; --rotation: {{ servo_angle }}deg; --color:#735cb8; --background:#e9ecef;">
@@ -121,13 +135,13 @@
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">Voltage</h5>
+                            <h5 class="card-title">Energy Production meter</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
                                     style="width: 200px; --rotation: {{ voltage_rotation }}deg; --color:#5cb85c; --background:#e9ecef;">
                                     <div class="percentage"></div>
                                     <div class="mask"></div>
-                                    <span class="value">{{ latest_sensor_data.voltage }}v/5v</span>
+                                    <span class="value">{{ latest_sensor_data.voltage }}v/4.2v</span>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +151,7 @@
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">LDR Value 1</h5>
+                            <h5 class="card-title">Light Intencity on Left side</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
                                     style="width: 200px; --rotation: {{ ldr1_rotation }}deg; --color:#b88d5c; --background:#e9ecef;">
@@ -153,7 +167,7 @@
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">LDR Value 2</h5>
+                            <h5 class="card-title">Light Intencity on Right side</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
                                     style="width: 200px; --rotation: {{ ldr2_rotation }}deg; --color:#f28305; --background:#e9ecef;">
@@ -183,6 +197,20 @@
 
         <!-- Table Section -->
         <h1 class="text-center">Log Table</h1>
+        <div class="card p-4">
+            <p id="alerttext" class=" text-center mt-3"></p>
+            <form method="GET" id="filterForm" class="filter-form mt-3">
+                {{ form.as_p }}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <button type="button" class="btn btn-danger ml-2" id="clearFormBtn">Clear Form</button>
+                </div>
+
+            </form>
+        </div>
+        <button type="button" id="filterBtn" class="btn btn-primary mt-3 ml-auto"
+            style="background-color: blue;">Filters?</button>
+
         <table class="table mt-4">
             <thead class="thead-light">
                 <tr>
@@ -207,7 +235,13 @@
         </table>
     </div>
 </body>
+{%else%}
+<div class="text-center">
+    <h2 style="color:red;">NO Data Found For {{request.session.user_email}} Try Contacting support Team</h2>
+    <a href="{% url 'contact' %}" class="btn btn-primary rounded-pill">Contact & Support</a>
+</div>
 
+{%endif%}
 <script>
     $(document).ready(function () {
         function updateLatestData() {
@@ -226,6 +260,53 @@
 
         setInterval(updateLatestData, 5000);
         updateLatestData();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var filterForm = document.getElementById('filterForm');
+        var filterBtn = document.getElementById('filterBtn');
+        var alerttext = document.getElementById('alerttext');
+        var clearFormBtn = document.getElementById('clearFormBtn');
+        filterBtn.addEventListener('click', function () {
+            filterForm.style.display = (filterForm.style.display === 'none' || filterForm.style.display === '') ? 'block' : 'none';
+            if (filterForm.style.display === 'block') {
+                filterBtn.innerHTML = 'Close Filters';
+                filterBtn.style.backgroundColor = 'red';
+            }
+            else {
+                filterBtn.innerHTML = 'Filters?';
+                filterBtn.style.backgroundColor = 'blue';
+            }
+        });
+
+
+        // Check if any fields are not empty
+        var formFields = filterForm.elements;
+        var isAnyFieldNotEmpty = false;
+
+        for (var i = 0; i < formFields.length; i++) {
+            if (formFields[i].type !== 'submit' && formFields[i].value.trim() !== '') {
+                isAnyFieldNotEmpty = true;
+                break;
+            }
+        }
+
+        if (isAnyFieldNotEmpty) {
+            alerttext.innerHTML = 'Filter is applied!';
+        } else {
+            alerttext.innerHTML = 'Apply filter for specific data';
+        }
+        clearFormBtn.addEventListener('click', function () {
+            // Reset the form to its default values
+            var formFields = filterForm.elements;
+
+            for (var i = 0; i < formFields.length; i++) {
+                if (formFields[i].type !== 'submit') {
+                    formFields[i].value = '';
+                }
+            }
+            filterForm.submit();
+
+        });
     });
 </script>
 

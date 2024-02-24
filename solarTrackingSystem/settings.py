@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -101,10 +102,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
+JAZZMIN_SETTINGS = {
+    "site_title": "Solar Tracker Admin",
+    "site_header": "Solar Tracker",
+    "site_brand": "Solar Tracker",
+    "welcome_sign": "Welcome to the Solar Tracker Admin Panel",
+    "show_ui_builder": True,
+    "changeform_format": "horizontal_tabs",
+    "show_ui_builder": True,
+}
+JAZZMIN_UI_TWEAKS = {
+    "theme": "lumen",
+    "navbar": "navbar-orange navbar-light",
+    "dark_mode_theme": "solar",
+    "brand_colour": "navbar-orange",
+    "accent": "accent-orange",
+    "sidebar": "sidebar-light-orange",
+}
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Asia/kolkata"
@@ -119,6 +133,13 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+# email configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "opensourceitems@gmail.com"
+EMAIL_HOST_PASSWORD = "kspgmwfjpvqfluco"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

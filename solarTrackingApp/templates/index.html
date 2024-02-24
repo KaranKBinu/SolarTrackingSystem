@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{%block title %}
+{%if request.session.user_name %}
+{{request.session.user_name}}'s Home
+{%else%}
+Home
+{% endif%}
+{%endblock %}
 
 {% block content %}
 <style>

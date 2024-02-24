@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{%block title %}
 
+Login and stay connected
+
+{%endblock %}
 {% block content %}
 <style>
     input[type='text'],
@@ -39,6 +43,23 @@
 
     .input-group-text {
         border: 1px solid #0c9FFF;
+    }
+
+    .forgot-password {
+        cursor: default;
+    }
+
+    .forgot-password:hover {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+    }
+
+    .forgot-modal-close-btn:hover {
+        background-color: red;
+        border: 1px sold black;
+        color: white;
+        border-radius: 3px;
     }
 </style>
 </style>
@@ -80,7 +101,8 @@
 
                             </div>
                             <p class="help-block text-danger"></p>
-                            <a class="help-block text-primary ml-2" href="#">Forgot Password?</a>
+                            <p class="help-block text-primary ml-2 forgot-password" onclick="openModal()">
+                                Forgot Password?</p>
                         </div>
 
                         <div class="text-center">
@@ -95,6 +117,30 @@
         </div>
     </div>
 </div>
+<div id="emailModal" class="modal align-items-center justify-content-center">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close ml-auto py-2 px-3 forgot-modal-close-btn" aria-label="Close"
+                onclick="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <form id="emailForm" method="post" action="{% url 'send_otp' %}">
+                {% csrf_token %}
+                <div class="card border-0">
+                    <div class="card-body text-center">
+                        <label for="email" class="sr-only">Enter your email:</label>
+                        <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Your Email"
+                            required>
+                        <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <!-- Contact End -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -113,6 +159,13 @@
             }
         });
     });
+    function openModal() {
+        document.getElementById('emailModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('emailModal').style.display = 'none';
+    }
 </script>
 
 {% endblock %}

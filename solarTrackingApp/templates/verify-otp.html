@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title %}
+
+verify your OTP
+
+{%endblock %}
+{% block content %}
+
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="card mt-4 text-center bg-light">
+                    <div class="card-header text-center text-white">
+                        <h2>OTP Verification</h2>
+                        {% block error_messages %}
+                        {{ block.super }}
+                        {% endblock %}
+                        <form method="post" action="{% url 'verify_otp' %}">
+                            {% csrf_token %}
+                            <div class="card border-0">
+                                <div class="card-body text-center">
+                                    <label for="otp" class="sr-only">Enter OTP:</label>
+                                    <input type="text" id="otp" name="otp"
+                                        class="form-control mb-3 text-center rounded-pill border-primary"
+                                        placeholder="Enter OTP that recived to {{request.session.otp_verification_email}}"
+                                        required>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block rounded-pill border shadow">Verify
+                                        OTP</button>
+                                </div>
+                            </div>
+                        </form>
+                        <p class="text-dark">If you didn't receive the OTP, you can <a href="{% url 'resend_otp' %}"
+                                id="resend-link" style="font-weight: bold;">resend it</a>
+                            <span id="timer" style="color: black;"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var resendLink = document.getElementById('resend-link');
+            var timerDisplay = document.getElementById('timer');
+
+            var seconds = 60;
+            var timer;
+
+            function updateTimerDisplay() {
+                timerDisplay.textContent = 'after ' + seconds + ' seconds';
+                if (seconds == 0) {
+                    timerDisplay.textContent = 'now!';
+                }
+            }
+
+            function enableResendLink() {
+                resendLink.classList.remove('disabled');
+                resendLink.classList.remove('text-danger');
+                resendLink.style.cursor = 'pointer';
+                resendLink.href = "{% url 'resend_otp' %}";
+                resendLink.addEventListener('click', function (event) {
+                    if (seconds > 0) {
+                        event.preventDefault();
+                        alert('Please wait for the timer to expire before resending OTP.');
+                    }
+                });
+            }
+
+            function disableResendLink() {
+                resendLink.classList.add('disabled');
+                resendLink.classList.add('text-danger');
+                resendLink.style.cursor = 'not-allowed';
+                resendLink.removeAttribute('href');
+            }
+
+            function startTimer() {
+                timer = setInterval(function () {
+                    if (seconds > 0) {
+                        seconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timer);
+                        enableResendLink();
+                    }
+                }, 1000);
+            }
+
+            // Start the timer on page load
+            disableResendLink();
+            updateTimerDisplay();
+            startTimer();
+        });
+    </script>
+
+</body>
+
+{% endblock %}

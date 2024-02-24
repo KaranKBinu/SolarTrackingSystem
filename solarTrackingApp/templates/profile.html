@@ -1,103 +1,130 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{%block title %}
+{%if request.session.user_name %}
+{{request.session.user_name}}'s Profile
+{%else%}
+Profile
+{% endif%}
+{%endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center mt-4">
     <div class="col-md-8">
       <div class="card mt-4 text-center bg-light">
+
         <div class="card-header text-center text-white">
           <h5 class="text-uppercase mb-3">Profile</h5>
           {% block error_messages %} {{ block.super }} {% endblock %}
+          <div class="ml-auto">
+            <a href="{% url 'logout' %}" class="btn rounded-pill border-light "
+              style="color: white;background-color: red;font-weight: bold;">Logout</a>
+          </div>
           <h1 class="font-secondary display-4" style="text-transform: capitalize">
-            Hello, {{ user.first_name }}
+            Hello, {{ user.first_name }} {{ user.last_name}}
           </h1>
-        </div>
-        <div class="card-body text-center">
-          <form method="post" action="{% url 'update_profile' %}">
+
+
+          <div class="card-body text-center">
+            <form method="post" action="{% url 'update_profile' %}">
+              {% csrf_token %}
+              <div class="table-responsive ">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <th scope="row" class="align-middle">First Name</th>
+                      <td>
+                        <div class="editable-field">
+                          <span class="field-value" data-field="first_name">{{ user.first_name }}</span>
+                          <input type="text" name="first_name" value="{{ user.first_name }}"
+                            class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                        </div>
+
+                        <span class="edit-icon" onclick="toggleEdit('first_name')"><i class="fas fa-edit"></i></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="align-middle">Last Name</th>
+                      <td>
+                        <div class="editable-field">
+                          <span class="field-value" data-field="last_name">{{ user.last_name }}</span>
+                          <input type="text" name="last_name" value="{{ user.last_name }}"
+                            class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                        </div>
+
+                        <span class="edit-icon" onclick="toggleEdit('last_name')"><i class="fas fa-edit"></i></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="align-middle">Email</th>
+                      <td>
+                        <div class="editable-field">
+                          <span class="field-value" data-field="email">{{ user.email }}</span><br>
+                          <small><strong>
+                              <span style="color: red;">Caution :</span>Changing Email Also changes Username as the new
+                              email
+                            </strong></small>
+                          <input type="email" name="email" value="{{ user.email }}"
+                            class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                        </div>
+
+                        <span class="edit-icon" onclick="toggleEdit('email')"><i class="fas fa-edit"></i></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="align-middle">Phone</th>
+                      <td>
+                        <div class="editable-field">
+                          <span class="field-value" data-field="phone_number">{{ user.phone_number }}</span>
+                          <input type="text" name="phone_number" value="{{ user.phone_number }}"
+                            class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                        </div>
+
+                        <span class="edit-icon" onclick="toggleEdit('phone_number')"><i class="fas fa-edit"></i></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="align-middle">Address</th>
+                      <td>
+                        <div class="editable-field">
+                          <span class="field-value" data-field="address">{{ user.address }}</span>
+                          <input type="text" name="address" value="{{ user.address }}"
+                            class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
+                        </div>
+
+                        <span class="edit-icon" onclick="toggleEdit('address')"><i class="fas fa-edit"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button type="submit" class="btn btn-primary rounded-pill mt-3">Update Profile</button>
+            </form>
+          </div>
+          <hr>
+
+          <h2>Reset Your Password</h2>
+          <form id="emailForm" method="post" action="{% url 'send_otp' %}">
             {% csrf_token %}
-            <div class="table-responsive ">
-              <table class="table table-bordered">
-                <tbody>
-                  <tr>
-                    <th scope="row" class="align-middle">First Name</th>
-                    <td>
-                      <div class="editable-field">
-                        <span class="field-value" data-field="first_name">{{ user.first_name }}</span>
-                        <input type="text" name="first_name" value="{{ user.first_name }}"
-                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <span class="edit-icon" onclick="toggleEdit('first_name')"><i class="fas fa-edit"></i></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">Last Name</th>
-                    <td>
-                      <div class="editable-field">
-                        <span class="field-value" data-field="last_name">{{ user.last_name }}</span>
-                        <input type="text" name="last_name" value="{{ user.last_name }}"
-                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <span class="edit-icon" onclick="toggleEdit('last_name')"><i class="fas fa-edit"></i></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">Email</th>
-                    <td>
-                      <div class="editable-field">
-                        <span class="field-value" data-field="email">{{ user.email }}</span><br>
-                        <small><strong>
-                            <span style="color: red;">Caution :</span>Changing Email Also changes Username as the new
-                            email
-                          </strong></small>
-                        <input type="email" name="email" value="{{ user.email }}"
-                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <span class="edit-icon" onclick="toggleEdit('email')"><i class="fas fa-edit"></i></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">Phone</th>
-                    <td>
-                      <div class="editable-field">
-                        <span class="field-value" data-field="phone_number">{{ user.phone_number }}</span>
-                        <input type="text" name="phone_number" value="{{ user.phone_number }}"
-                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <span class="edit-icon" onclick="toggleEdit('phone_number')"><i class="fas fa-edit"></i></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">Address</th>
-                    <td>
-                      <div class="editable-field">
-                        <span class="field-value" data-field="address">{{ user.address }}</span>
-                        <input type="text" name="address" value="{{ user.address }}"
-                          class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
-                      </div>
-                    </td>
-                    <td class="align-middle">
-                      <span class="edit-icon" onclick="toggleEdit('address')"><i class="fas fa-edit"></i></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card border-0">
+              <div class="card-body text-center">
+                <label for="email" class="sr-only">Enter your email:</label>
+                <input type="email" id="email" name="email"
+                  class="form-control mb-3 text-center rounded-pill border-primary" value="{{ user.email }}" required
+                  readonly>
+                <button type="submit" class="btn btn-primary btn-block">Send OTP for Password Reset</button>
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary rounded-pill mt-3">Update Profile</button>
           </form>
+
+
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <style>
   .hidden-input {
     display: none;

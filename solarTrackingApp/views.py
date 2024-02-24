@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Contact, UserProfile, SensorData
@@ -5,6 +6,10 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 
 # Create your views here.
@@ -199,32 +204,190 @@ def update_data(request):
         return HttpResponse("Invalid request method.", status=400)
 
 
+# views.py
+
+from .forms import SensorDataFilterForm
+from django.db.models import Q
+from django.utils import timezone
+
+
 def dashboard(request):
     try:
         if request.session["user_id"]:
-            # Get the latest sensor data entry
-            latest_sensor_data = SensorData.objects.order_by("-timestamp").first()
-            voltage_rotation = (latest_sensor_data.voltage / 5) * 180
-            ldr1_rotation = (latest_sensor_data.ldrValue1 / 4095) * 180
-            ldr2_rotation = (latest_sensor_data.ldrValue2 / 4095) * 180
-            servo_angle = (latest_sensor_data.servoAngle / 180) * 180
-            # Get all sensor data for the table
-            all_sensor_data = SensorData.objects.filter(
-                username=request.session["user_email"]
-            ).order_by("-timestamp")
+            form = SensorDataFilterForm(request.GET)
+            # Inside your view function
+            if form.is_valid():
+                date = form.cleaned_data.get("date")
+                start_time = form.cleaned_data.get("start_time")
+                end_time = form.cleaned_data.get("end_time")
+                voltage_value = form.cleaned_data.get("voltage_value")
+                servo_angle = form.cleaned_data.get("servo_angle")
 
-            return render(
-                request,
-                "dashboard.html",
-                {
-                    "latest_sensor_data": latest_sensor_data,
-                    "all_sensor_data": all_sensor_data,
-                    "voltage_rotation": voltage_rotation,
-                    "ldr1_rotation": ldr1_rotation,
-                    "ldr2_rotation": ldr2_rotation,
-                    "servo_angle": servo_angle,
-                },
-            )
+                # Get the latest sensor data entry
+                latest_sensor_data = (
+                    SensorData.objects.filter(username=request.session["user_email"])
+                    .order_by("-timestamp")
+                    .first()
+                )
+                voltage_rotation = (latest_sensor_data.voltage / 4.2) * 180
+                ldr1_rotation = (latest_sensor_data.ldrValue1 / 4095) * 180
+                ldr2_rotation = (latest_sensor_data.ldrValue2 / 4095) * 180
+                servo_rotation = (latest_sensor_data.servoAngle / 180) * 180
+
+                # Filter sensor data based on form inputs
+                all_sensor_data = SensorData.objects.filter(
+                    username=request.session["user_email"]
+                ).order_by("-timestamp")
+
+                if date:
+                    all_sensor_data = all_sensor_data.filter(timestamp__date=date)
+                if start_time and end_time:
+                    all_sensor_data = all_sensor_data.filter(
+                        timestamp__time__range=(start_time, end_time)
+                    )
+                if voltage_value:
+                    all_sensor_data = all_sensor_data.filter(voltage=voltage_value)
+                if servo_angle:
+                    all_sensor_data = all_sensor_data.filter(servoAngle=servo_angle)
+
+                return render(
+                    request,
+                    "dashboard.html",
+                    {
+                        "latest_sensor_data": latest_sensor_data,
+                        "all_sensor_data": all_sensor_data,
+                        "voltage_rotation": voltage_rotation,
+                        "ldr1_rotation": ldr1_rotation,
+                        "ldr2_rotation": ldr2_rotation,
+                        "servo_angle": servo_rotation,
+                        "form": form,
+                    },
+                )
     except:
-        messages.error(request, "please login to access dasboard!!")
+        messages.error(request, "Please login to access dashboard!!")
+        return redirect("login")
+
+
+def send_otp(request):
+    if request.method == "POST":
+        user_email = request.POST.get("email")
+        if UserProfile.objects.filter(email=user_email).exists():
+            request.session["otp"] = str(random.randint(1000, 9999))
+            request.session["otp_verification_email"] = user_email
+
+            if send_otp_email(
+                email=request.session["otp_verification_email"],
+                otp=request.session["otp"],
+            ):
+                messages.success(
+                    request,
+                    f"OTP has been sent successfully to {request.session['otp_verification_email']}",
+                )
+                return redirect("verify_otp")
+            else:
+                messages.error(
+                    request,
+                    "Something error Occured while sending Email you can try resending after sometime",
+                )
+                return redirect("login")
+        else:
+            messages.error(
+                request,
+                f"This email {user_email} is not registered or incorrect email address.",
+            )
+            return redirect("login")
+    else:
+        return redirect("login")
+
+
+def verify_otp(request):
+    if request.method == "POST":
+        user_entered_otp = request.POST.get("otp")
+        if "otp" in request.session and "otp_verification_email" in request.session:
+            saved_otp = request.session["otp"]
+            user_email = request.session["otp_verification_email"]
+
+            if user_entered_otp == saved_otp:
+                del request.session["otp"]
+                request.session["is_verified"] = True
+                messages.success(
+                    request, f"OTP verification successful for {user_email}"
+                )
+                return redirect("update_password")
+            else:
+                messages.error(request, "Invalid OTP. Please try again.")
+                return render(request, "verify-otp.html")
+        else:
+            messages.error(request, "invalid Request...!")
+            return redirect("login")
+    else:
+        return render(request, "verify-otp.html")
+
+
+def update_password(request):
+    if request.session.get("is_verified") == True:
+        if request.method == "POST":
+            password = request.POST["password"]
+            confirm_password = request.POST["confirm_password"]
+            if password != "" and password == confirm_password:
+                user = UserProfile.objects.filter(
+                    email=request.session["otp_verification_email"]
+                )
+                user.update(password=make_password(password))
+                del request.session["otp_verification_email"]
+                del request.session["is_verified"]
+                messages.success(
+                    request,
+                    "Updated password successfully, you can now login with the new password",
+                )
+                return redirect("login")
+            else:
+                messages.error(
+                    request,
+                    "Passwords do not match. Please enter the same password in both fields.",
+                )
+                return redirect("update_password")
+    else:
+        messages.error(request, "invalid Request...!")
+        return redirect("login")
+    return render(request, "update_password.html")
+
+
+def send_otp_email(email, otp):
+    try:
+        subject = "Solar Tracker OTP for Verification"
+        email_from = settings.EMAIL_HOST_USER
+
+        # Render the HTML template with the OTP
+        html_content = render_to_string("otp_email_template.html", {"otp": otp})
+        text_content = strip_tags(
+            html_content
+        )  # Strip HTML tags for the plain text version
+
+        msg = EmailMultiAlternatives(subject, text_content, email_from, [email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        return True
+    except Exception as e:
+        print(f"Error sending OTP email: {e}")
+        return False
+
+
+def resend_otp(request):
+    try:
+
+        if send_otp_email(
+            email=request.session["otp_verification_email"],
+            otp=request.session["otp"],
+        ):
+            messages.success(
+                request,
+                f"OTP has been re-sent to {request.session['otp_verification_email']}.",
+            )
+            return redirect("verify_otp")
+    except:
+        messages.error(
+            request,
+            "Something error Occured while sending Email you can try resending after sometime",
+        )
         return redirect("login")
