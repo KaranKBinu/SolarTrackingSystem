@@ -114,32 +114,39 @@ def signup(request):
         if UserProfile.objects.filter(email=email).exists():
             messages.error(request, f"An account with {email} already exists.")
             return redirect("signup")
+        if send_email_to_welcome(full_name=f"{first_name} {last_name}", email=email):
+            # Hash the password before saving it
+            hashed_password = make_password(user_password)
 
-        # Hash the password before saving it
-        hashed_password = make_password(user_password)
+            # Create user profile
+            user_profile = UserProfile.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                username=email,
+                email=email,
+                phone_number=phone_number,
+                password=hashed_password,
+                address=address,
+            )
 
-        # Create user profile
-        user_profile = UserProfile.objects.create(
-            first_name=first_name,
-            last_name=last_name,
-            username=email,
-            email=email,
-            phone_number=phone_number,
-            password=hashed_password,
-            address=address,
-        )
-
-        # Store user information in session
-        request.session["user_id"] = user_profile.id
-        request.session["user_email"] = user_profile.email
-        request.session["user_name"] = (
-            f"{user_profile.first_name} {user_profile.last_name}"
-        )
-
-        messages.success(request, "Account created successfully. Welcome To our Family")
-        return redirect("index")
-
-    return render(request, "signup.html")
+            # Store user information in session
+            request.session["user_id"] = user_profile.id
+            request.session["user_email"] = user_profile.email
+            request.session["user_name"] = (
+                f"{user_profile.first_name} {user_profile.last_name}"
+            )
+            messages.success(
+                request, "Account created successfully. Welcome To our Family"
+            )
+            return redirect("index")
+        else:
+            messages.error(
+                request,
+                "Failed to send verification mail. Try Again Later. Or make sure You have enterd the correct email",
+            )
+            return redirect("signup")
+    else:
+        return render(request, "signup.html")
 
 
 def user_login(request):
@@ -391,3 +398,25 @@ def resend_otp(request):
             "Something error Occured while sending Email you can try resending after sometime",
         )
         return redirect("login")
+
+
+def send_email_to_welcome(full_name, email):
+    try:
+        subject = f"Solar Tracker Team Welcomes {full_name} To Our Family"
+        email_from = settings.EMAIL_HOST_USER
+
+        # Render the HTML template with the OTP
+        html_content = render_to_string(
+            "welcome_user_on_signup.html", {"full_name": full_name, "email": email}
+        )
+        text_content = strip_tags(
+            html_content
+        )  # Strip HTML tags for the plain text version
+
+        msg = EmailMultiAlternatives(subject, text_content, email_from, [email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        return True
+    except Exception as e:
+        print(f"Error sending Welcome email: {e}")
+        return False

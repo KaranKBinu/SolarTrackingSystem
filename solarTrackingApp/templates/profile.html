@@ -63,14 +63,15 @@ Profile
                         <div class="editable-field">
                           <span class="field-value" data-field="email">{{ user.email }}</span><br>
                           <small><strong>
-                              <span style="color: red;">Caution :</span>Changing Email Also changes Username as the new
-                              email
+                              <span style="color: red;">Caution :</span>You can change Your Email By contacting our
+                              team, you can
+                              <a href="{% url 'contact' %}">contact us</a> for that
                             </strong></small>
                           <input type="email" name="email" value="{{ user.email }}"
                             class="form-control text-center hidden-input" style="color: black; font-weight: bold" />
                         </div>
 
-                        <span class="edit-icon" onclick="toggleEdit('email')"><i class="fas fa-edit"></i></span>
+
                       </td>
                     </tr>
                     <tr>
