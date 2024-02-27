@@ -220,9 +220,15 @@ from django.utils import timezone
 
 def dashboard(request):
     try:
-        if request.session["user_id"]:
+        # Check if the user is authenticated
+        if "user_id" in request.session:
             form = SensorDataFilterForm(request.GET)
-            # Inside your view function
+            latest_sensor_data = (
+                SensorData.objects.filter(username=request.session["user_email"])
+                .order_by("-timestamp")
+                .first()
+            )
+
             if form.is_valid():
                 date = form.cleaned_data.get("date")
                 start_time = form.cleaned_data.get("start_time")
@@ -230,18 +236,6 @@ def dashboard(request):
                 voltage_value = form.cleaned_data.get("voltage_value")
                 servo_angle = form.cleaned_data.get("servo_angle")
 
-                # Get the latest sensor data entry
-                latest_sensor_data = (
-                    SensorData.objects.filter(username=request.session["user_email"])
-                    .order_by("-timestamp")
-                    .first()
-                )
-                voltage_rotation = (latest_sensor_data.voltage / 4.2) * 180
-                ldr1_rotation = (latest_sensor_data.ldrValue1 / 4095) * 180
-                ldr2_rotation = (latest_sensor_data.ldrValue2 / 4095) * 180
-                servo_rotation = (latest_sensor_data.servoAngle / 180) * 180
-
-                # Filter sensor data based on form inputs
                 all_sensor_data = SensorData.objects.filter(
                     username=request.session["user_email"]
                 ).order_by("-timestamp")
@@ -257,6 +251,28 @@ def dashboard(request):
                 if servo_angle:
                     all_sensor_data = all_sensor_data.filter(servoAngle=servo_angle)
 
+                # Calculate rotations based on latest sensor data
+                voltage_rotation = (
+                    (latest_sensor_data.voltage / 4.2) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                ldr1_rotation = (
+                    (latest_sensor_data.ldrValue1 / 4095) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                ldr2_rotation = (
+                    (latest_sensor_data.ldrValue2 / 4095) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                servo_rotation = (
+                    (latest_sensor_data.servoAngle / 180) * 180
+                    if latest_sensor_data
+                    else None
+                )
+
                 return render(
                     request,
                     "dashboard.html",
@@ -270,8 +286,14 @@ def dashboard(request):
                         "form": form,
                     },
                 )
-    except:
-        messages.error(request, "Please login to access dashboard!!")
+
+        # If the user is not authenticated, redirect to the login page
+        else:
+            messages.error(request, "Please login to access the dashboard!")
+            return redirect("login")
+
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
         return redirect("login")
 
 
