@@ -2,7 +2,6 @@ import random
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Contact, UserProfile, SensorData
-from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
@@ -115,8 +114,6 @@ def signup(request):
             messages.error(request, f"An account with {email} already exists.")
             return redirect("signup")
         if send_email_to_welcome(full_name=f"{first_name} {last_name}", email=email):
-            # Hash the password before saving it
-            hashed_password = make_password(user_password)
 
             # Create user profile
             user_profile = UserProfile.objects.create(
@@ -125,7 +122,7 @@ def signup(request):
                 username=email,
                 email=email,
                 phone_number=phone_number,
-                password=hashed_password,
+                password=user_password,
                 address=address,
             )
 
@@ -159,7 +156,7 @@ def user_login(request):
             user = UserProfile.objects.get(username=username)
             print(user)
             # Check if the provided password matches the stored password
-            if check_password(password, user.password):
+            if password == user.password:
                 # Store user information in session (optional)
                 request.session["user_id"] = user.id
                 request.session["user_email"] = user.email
@@ -362,7 +359,7 @@ def update_password(request):
                 user = UserProfile.objects.filter(
                     email=request.session["otp_verification_email"]
                 )
-                user.update(password=make_password(password))
+                user.update(password=password)
                 del request.session["otp_verification_email"]
                 del request.session["is_verified"]
                 messages.success(
