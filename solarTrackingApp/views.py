@@ -9,6 +9,12 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
+from .forms import SensorDataFilterForm
+from django.db.models import Q
+from django.utils import timezone
+from rest_framework import generics
+from .models import UserProfile
+from .serializers import UserProfileSerializer
 
 
 # Create your views here.
@@ -190,6 +196,7 @@ def update_data(request):
             ldrValue2 = request.POST["ldr2"]
             servoAngle = request.POST["servoAngle"]
             username = request.POST["username"]
+            localIp = request.POST["localIp"]
             # Save data to the database
             sensor_data = SensorData.objects.create(
                 voltage=voltage,
@@ -197,6 +204,7 @@ def update_data(request):
                 ldrValue2=ldrValue2,
                 servoAngle=servoAngle,
                 username=username,
+                localIp=localIp,
             )
             sensor_data.save()
             print(sensor_data)
@@ -206,13 +214,6 @@ def update_data(request):
     else:
         print("something went wrong!!!")
         return HttpResponse("Invalid request method.", status=400)
-
-
-# views.py
-
-from .forms import SensorDataFilterForm
-from django.db.models import Q
-from django.utils import timezone
 
 
 def dashboard(request):
@@ -269,7 +270,6 @@ def dashboard(request):
                     if latest_sensor_data
                     else None
                 )
-
                 return render(
                     request,
                     "dashboard.html",
@@ -441,11 +441,86 @@ def send_email_to_welcome(full_name, email):
         return False
 
 
-from rest_framework import generics
-from .models import UserProfile
-from .serializers import UserProfileSerializer
-
-
 class UserProfileList(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+
+def AndroidDashboard(request):
+    try:
+        # Check if the user is authenticated
+        if "user_id" in request.session:
+            form = SensorDataFilterForm(request.GET)
+            latest_sensor_data = (
+                SensorData.objects.filter(username=request.session["user_email"])
+                .order_by("-timestamp")
+                .first()
+            )
+
+            if form.is_valid():
+                date = form.cleaned_data.get("date")
+                start_time = form.cleaned_data.get("start_time")
+                end_time = form.cleaned_data.get("end_time")
+                voltage_value = form.cleaned_data.get("voltage_value")
+                servo_angle = form.cleaned_data.get("servo_angle")
+
+                all_sensor_data = SensorData.objects.filter(
+                    username=request.session["user_email"]
+                ).order_by("-timestamp")
+
+                if date:
+                    all_sensor_data = all_sensor_data.filter(timestamp__date=date)
+                if start_time and end_time:
+                    all_sensor_data = all_sensor_data.filter(
+                        timestamp__time__range=(start_time, end_time)
+                    )
+                if voltage_value:
+                    all_sensor_data = all_sensor_data.filter(voltage=voltage_value)
+                if servo_angle:
+                    all_sensor_data = all_sensor_data.filter(servoAngle=servo_angle)
+
+                # Calculate rotations based on latest sensor data
+                voltage_rotation = (
+                    (latest_sensor_data.voltage / 4.2) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                ldr1_rotation = (
+                    (latest_sensor_data.ldrValue1 / 4095) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                ldr2_rotation = (
+                    (latest_sensor_data.ldrValue2 / 4095) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                servo_rotation = (
+                    (latest_sensor_data.servoAngle / 180) * 180
+                    if latest_sensor_data
+                    else None
+                )
+                localIp = latest_sensor_data.localIp
+                return render(
+                    request,
+                    "android_dashboard.html",
+                    {
+                        "latest_sensor_data": latest_sensor_data,
+                        "all_sensor_data": all_sensor_data,
+                        "voltage_rotation": voltage_rotation,
+                        "ldr1_rotation": ldr1_rotation,
+                        "ldr2_rotation": ldr2_rotation,
+                        "servo_angle": servo_rotation,
+                        "localIp": localIp,
+                        "form": form,
+                    },
+                )
+
+        # If the user is not authenticated, redirect to the login page
+        else:
+            messages.error(request, "Please login to access the dashboard!")
+            return redirect("login")
+
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+        return redirect("login")

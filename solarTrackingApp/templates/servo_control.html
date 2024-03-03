@@ -1,0 +1,24 @@
+<!-- servo_control/templates/servo_control/index.html -->
+<html>
+
+<head>
+    <title>Servo Control</title>
+</head>
+
+<body>
+    <h1>Servo Control</h1>
+    <p>Choose angle: <input type='range' id='angle' min='0' max='180' value='{{ angle }}' onchange='setServoAngle()'>
+    </p>
+    <button onclick='setServoAngle()'>Set Angle</button>
+
+    <script>
+        function setServoAngle() {
+            var angle = document.getElementById('angle').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/setAngle?angle=' + angle, true);
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

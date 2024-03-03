@@ -16,5 +16,6 @@ urlpatterns = [
     path("verify-otp/", views.verify_otp, name="verify_otp"),
     path("update-password/", views.update_password, name="update_password"),
     path("resend_otp/", views.resend_otp, name="resend_otp"),
+    path("android-dashboard/", views.AndroidDashboard, name="android_dashboard"),
     path("api/userprofiles/", views.UserProfileList.as_view(), name="userprofile-list"),
 ]

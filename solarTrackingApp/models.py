@@ -20,6 +20,7 @@ class SensorData(models.Model):
     ldrValue1 = models.IntegerField()
     ldrValue2 = models.IntegerField()
     servoAngle = models.FloatField()
+    localIp = models.CharField(max_length=20, default="")
     username = models.EmailField(default="")
 
     def __str__(self):

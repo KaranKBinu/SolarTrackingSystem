@@ -1,22 +1,36 @@
-{% extends 'base.html' %}
-{% load static %}
-{%block title %}
-{%if request.session.user_name %}
-{{request.session.user_name}}'s Dashboard
-{%else%}
-Dashboard
-{% endif%}
-{%endblock %}
-
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
+{%load static %}
 
 <head>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Solar Tracker" name="keywords">
+    <meta content="Solar Tracker" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/solar-favicon.webp' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <title>Dashboard</title>
     <style>
         .gauge {
@@ -106,13 +120,19 @@ Dashboard
 <body>
     <div class="container mt-4">
 
-        <h2 class="text-center mt-6" style="margin-top: 15%;">Sensor Data Dashboard</h2>
 
+        <h2 class="text-center mt-6">Sensor Data Dashboard For Android</h2>
+        <div class="mt-4 text-center">
+            <a href="http://{{localIp}}/" class="btn btn-danger rounded-pill ">Go To Control Panel</a>
+        </div>
+        <div class="mt-4 ml-auto">
+            <a href="/android-dashboard/" class="btn btn-info rounded-pill ">Refresh Data</a>
+        </div>
         {% if latest_sensor_data.username == request.session.user_email %}
 
         <!-- Latest Data Section -->
         <div class="latest-data bg-light p-3">
-            <h3 class="text-center">Latest Data</h3>
+            <h3 class="text-center">Look out Latest Data</h3>
             {% if latest_sensor_data %}
 
             <div class="row justify-content-center">
@@ -122,7 +142,7 @@ Dashboard
                             <h5 class="card-title">Current Panel angle</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
-                                    style="width: 200px; --rotation: {{ servo_angle }}deg; --color:#735cb8; --background:#e9ecef;">
+                                    style="width: 200px; --rotation: {{ servo_angle }}deg; --color:#00e5ff; --background:#e9ecef;">
                                     <div class="percentage"></div>
                                     <div class="mask"></div>
                                     <span class="value">{{ latest_sensor_data.servoAngle }}&deg;/180&deg;</span>
@@ -139,7 +159,7 @@ Dashboard
                             <h5 class="card-title">Energy Production meter</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
-                                    style="width: 200px; --rotation: {{ voltage_rotation }}deg; --color:#5cb85c; --background:#e9ecef;">
+                                    style="width: 200px; --rotation: {{ voltage_rotation }}deg; --color:#5c6ab8; --background:#e9ecef;">
                                     <div class="percentage"></div>
                                     <div class="mask"></div>
                                     <span class="value">{{ latest_sensor_data.voltage }}v/4.2v</span>
@@ -155,7 +175,7 @@ Dashboard
                             <h5 class="card-title">Light Intencity on Left side</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
-                                    style="width: 200px; --rotation: {{ ldr1_rotation }}deg; --color:#b88d5c; --background:#e9ecef;">
+                                    style="width: 200px; --rotation: {{ ldr1_rotation }}deg; --color:#b85ca6; --background:#e9ecef;">
                                     <div class="percentage"></div>
                                     <div class="mask"></div>
                                     <span class="value">{{ latest_sensor_data.ldrValue1 }}/4095</span>
@@ -171,7 +191,7 @@ Dashboard
                             <h5 class="card-title">Light Intencity on Right side</h5>
                             <div class="gauge-container">
                                 <div class="gauge"
-                                    style="width: 200px; --rotation: {{ ldr2_rotation }}deg; --color:#f28305; --background:#e9ecef;">
+                                    style="width: 200px; --rotation: {{ ldr2_rotation }}deg; --color:#f2e605; --background:#e9ecef;">
                                     <div class="percentage"></div>
                                     <div class="mask"></div>
                                     <span class="value">{{ latest_sensor_data.ldrValue2 }}/4095</span>
@@ -241,13 +261,26 @@ Dashboard
     <h2 style="color:red;">NO Data Found For {{request.session.user_email}} Try Contacting support Team</h2>
     <a href="{% url 'contact' %}" class="btn btn-primary rounded-pill">Contact & Support</a>
 </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
 
+<!-- Contact Javascript File -->
+<script src="{% static 'mail/jqBootstrapValidation.min.js '%}"></script>
+<script src="{% static 'mail/contact.js' %}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
 {%endif%}
 <script>
     $(document).ready(function () {
         function updateLatestData() {
             $.ajax({
-                url: '/dashboard/',
+                url: '/android-dashboard/',
                 type: 'GET',
                 success: function (data) {
                     var latestData = $(data).find('.latest-data').html();
@@ -312,4 +345,3 @@ Dashboard
 </script>
 
 </html>
-{% endblock %}
