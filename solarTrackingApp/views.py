@@ -524,3 +524,7 @@ def AndroidDashboard(request):
     except Exception as e:
         messages.error(request, f"An error occurred: {str(e)}")
         return redirect("login")
+
+
+def handler404(request, exception):
+    return render(request, "404.html", status=404)
