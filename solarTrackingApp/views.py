@@ -526,5 +526,5 @@ def AndroidDashboard(request):
         return redirect("login")
 
 
-def handler404(request, exception):
+def custom_404(request, unknown_path):
     return render(request, "404.html", status=404)

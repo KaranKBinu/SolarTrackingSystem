@@ -9,7 +9,3 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-from django.conf.urls import handler404
-
-handler404 = "solarTrackingApp.views.handler404"
