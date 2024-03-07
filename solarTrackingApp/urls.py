@@ -18,5 +18,5 @@ urlpatterns = [
     path("resend_otp/", views.resend_otp, name="resend_otp"),
     path("android-dashboard/", views.AndroidDashboard, name="android_dashboard"),
     path("api/userprofiles/", views.UserProfileList.as_view(), name="userprofile-list"),
-    path("<path:unknown_path>", views.custom_404, name="custom_404"),
+    # path("<path:unknown_path>", views.custom_404, name="custom_404"),
 ]
