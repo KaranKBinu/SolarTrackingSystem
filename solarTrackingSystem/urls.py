@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from SolarTrackingSystem import solarTrackingApp
+from ..solarTrackingApp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -14,5 +14,5 @@ if settings.DEBUG:
 
 # Catch-all pattern for 404 page
 urlpatterns += [
-    path("<path:unknown_path>", solarTrackingApp.views.custom_404, name="custom_404"),
+    path("<path:unknown_path>", views.custom_404, name="custom_404"),
 ]
