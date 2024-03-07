@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +14,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+            /* Use min-height instead of height to ensure content is centered even if it's smaller */
             text-align: center;
         }
 
@@ -31,14 +33,24 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+        img {
+            max-width: 100%;
+            /* Ensure the image doesn't exceed its container's width */
+            margin-top: 20px;
+            /* Add some space between text and image */
+        }
     </style>
     <title>404 Not Found</title>
 </head>
+
 <body>
     <div>
         <h1>404 - Page Not Found</h1>
         <p>The requested page could not be found.</p>
         <p>Go back to <a href="/">home</a>.</p>
+        <img src="https://www.consultation.co.jp/img/404-page-animation-example.gif" alt="Page not found animation">
     </div>
 </body>
+
 </html>
